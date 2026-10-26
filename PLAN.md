@@ -134,7 +134,7 @@ Post-launch integration tasks (not part of the MVP steps above):
 |---|---|---|---|---|
 | P1 | Link to `kukirim.com` from this site | 11 deployed and reachable | Set `SITE.mainSiteLive = true` in `src/config.js` (footer link renders automatically); add header/nav or in-content links only if useful; build passes | pending |
 
-Legal drafts: `/privasi/` and `/syarat-ketentuan/` are plain-language drafts pending the owner's review (incl. UU PDP). The public pages show no review notices; status is tracked internally by `LEGAL_REVIEW` in `src/config.js`, and `npm run check:launch` fails until both are `true`. Do not add the operator's legal identity or a governing-law clause unless the owner supplies verified details.
+Legal pages: `/privasi/` and `/syarat-ketentuan/` are plain-language texts (not legal advice), reviewed by the owner on 2026-10-26 (`LEGAL_REVIEW` both `true`). The privacy page names the operator (`CONTACT.businessName`, `CONTACT.email`), Cloudflare as host with possible processing outside Indonesia, and how to make data requests. Re-review and reset the flag whenever data handling changes. The public pages show no review notices; status is tracked internally by `LEGAL_REVIEW` in `src/config.js`, and `npm run check:launch` fails until both are `true`. Do not add the operator's legal identity or a governing-law clause unless the owner supplies verified details.
 
 ---
 

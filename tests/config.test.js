@@ -19,8 +19,10 @@ describe('getContactFields', () => {
     ]);
   });
 
-  it('shipped config contains no invented contact details', () => {
-    expect(getContactFields(CONTACT)).toEqual([]);
+  it('shipped contact details are well-formed, not placeholders', () => {
+    const values = Object.values(CONTACT).filter((v) => v !== null);
+    for (const v of values) expect(v).not.toMatch(/example\.|contoh|belum diisi|\[|\]|todo|xxx/i);
+    if (CONTACT.email !== null) expect(CONTACT.email).toMatch(/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i);
   });
 });
 

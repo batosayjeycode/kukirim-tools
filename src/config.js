@@ -20,8 +20,8 @@ export const SITE = {
 
 /** @type {{ businessName: string | null, email: string | null, whatsapp: string | null, instagram: string | null }} */
 export const CONTACT = {
-  businessName: null,
-  email: null,
+  businessName: 'Kukirim Digital',
+  email: 'jey.owner@gmail.com',
   whatsapp: null,
   instagram: null,
 };
@@ -35,8 +35,8 @@ export const REQUIRED_FOR_LAUNCH = /** @type {const} */ (['businessName', 'email
  * launch check fails until then.
  */
 export const LEGAL_REVIEW = {
-  privacy: false,
-  terms: false,
+  privacy: true,
+  terms: true,
 };
 
 /**

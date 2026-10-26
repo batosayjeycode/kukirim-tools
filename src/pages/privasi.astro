@@ -1,10 +1,12 @@
 ---
-// INTERNAL: plain-language draft, not legal advice. Pending owner review (incl. UU PDP);
-// tracked by LEGAL_REVIEW in src/config.js and `npm run check:launch`. Do not render review notes.
+// INTERNAL: plain-language text, not legal advice. Reviewed by the owner 2026-10-26 (LEGAL_REVIEW in
+// src/config.js). Set the flag back to false and re-review whenever data handling changes. Do not render review notes.
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { SITE } from '../config.js';
+import { SITE, CONTACT } from '../config.js';
 
 const updated = '26 Oktober 2026';
+const operator = CONTACT.businessName?.trim();
+const email = CONTACT.email?.trim();
 ---
 
 <BaseLayout
@@ -20,6 +22,25 @@ const updated = '26 Oktober 2026';
       dan bagaimana data tersebut ditangani. Ringkasnya: kami tidak meminta akun, dan data yang Anda masukkan ke tools
       diproses di browser Anda sendiri.
     </p>
+
+    {
+      operator && (
+        <>
+          <h2>Pengelola situs</h2>
+          <p>
+            {SITE.name} dikelola oleh {operator}
+            {email ? (
+              <>
+                , yang dapat dihubungi melalui email <a href={`mailto:${email}`}>{email}</a>.
+              </>
+            ) : (
+              '.'
+            )}{' '}
+            {operator} bertanggung jawab atas pemrosesan data yang dijelaskan dalam kebijakan ini.
+          </p>
+        </>
+      )
+    }
 
     <h2>Data yang Anda masukkan ke tools</h2>
     <ul>
@@ -46,10 +67,15 @@ const updated = '26 Oktober 2026';
 
     <h2>Data teknis yang diproses penyedia hosting</h2>
     <p>
-      Situs ini di-host oleh penyedia layanan hosting pihak ketiga. Seperti situs web pada umumnya, saat Anda membuka
-      halaman, penyedia hosting memproses data teknis seperti alamat IP, jenis browser, halaman yang diminta, dan waktu
+      Situs ini di-host oleh Cloudflare, Inc. melalui layanan Cloudflare Pages. Seperti situs web pada umumnya, saat Anda
+      membuka halaman, Cloudflare memproses data teknis seperti alamat IP, jenis browser, halaman yang diminta, dan waktu
       akses untuk mengirimkan halaman dan menjaga keamanan layanan. Data ini tidak berisi angka atau data penerima yang Anda
       masukkan ke tools.
+    </p>
+    <p>
+      Cloudflare mengoperasikan jaringan server di banyak negara, sehingga data teknis tersebut dapat diproses di luar
+      Indonesia. Cara Cloudflare menangani data dijelaskan dalam{' '}
+      <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener">kebijakan privasi Cloudflare</a>.
     </p>
 
     <h2>Analitik, iklan, dan cookie</h2>
@@ -59,6 +85,29 @@ const updated = '26 Oktober 2026';
       layanan.
       Jika kami menambahkan analitik di kemudian hari, kami akan memilih layanan yang menghormati privasi, tidak mengirim isi
       yang Anda masukkan ke tools, dan memperbarui kebijakan ini sebelum mulai menggunakannya.
+    </p>
+
+    <h2>Hak Anda atas data pribadi</h2>
+    <p>
+      Data yang Anda masukkan ke tools tidak kami terima atau simpan, sehingga tidak ada data tersebut yang bisa kami
+      tampilkan, ubah, atau hapus. Data pengirim yang Anda simpan di browser sepenuhnya ada di perangkat Anda dan bisa Anda
+      hapus sendiri kapan saja, seperti dijelaskan di atas.
+    </p>
+    <p>
+      Jika Anda memiliki pertanyaan atau permintaan terkait data pribadi Anda, termasuk data teknis yang diproses penyedia
+      hosting, hubungi kami
+      {email ? (
+        <>
+          {' '}
+          di <a href={`mailto:${email}`}>{email}</a>
+        </>
+      ) : (
+        <>
+          {' '}
+          melalui halaman <a href="/kontak/">Kontak</a>
+        </>
+      )}
+      . Kami akan menanggapinya sesuai ketentuan peraturan perundang-undangan yang berlaku.
     </p>
 
     <h2>Tautan ke situs lain</h2>
@@ -73,6 +122,17 @@ const updated = '26 Oktober 2026';
     </p>
 
     <h2>Pertanyaan</h2>
-    <p>Untuk pertanyaan tentang privasi, gunakan saluran di halaman <a href="/kontak/">Kontak</a>.</p>
+    <p>
+      Untuk pertanyaan tentang privasi,{' '}
+      {email ? (
+        <>
+          kirim email ke <a href={`mailto:${email}`}>{email}</a> atau lihat halaman <a href="/kontak/">Kontak</a>.
+        </>
+      ) : (
+        <>
+          gunakan saluran di halaman <a href="/kontak/">Kontak</a>.
+        </>
+      )}
+    </p>
   </article>
 </BaseLayout>

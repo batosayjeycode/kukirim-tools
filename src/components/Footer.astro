@@ -1,0 +1,49 @@
+---
+import { SITE, CONTACT, getContactFields, readyPages } from '../config.js';
+
+const infoLinks = readyPages().filter((p) => !p.nav);
+const mainSiteHost = new URL(SITE.mainSiteUrl).host;
+const contactFields = getContactFields();
+const owner = CONTACT.businessName?.trim() || SITE.name;
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p class="footer-note">
+      Hasil perhitungan adalah estimasi. Data yang Anda masukkan diproses di browser dan tidak dikirim ke server kami.
+    </p>
+    {
+      infoLinks.length > 0 && (
+        <nav aria-label="Informasi">
+          <ul class="footer-links">
+            {infoLinks.map((item) => (
+              <li>
+                <a href={item.path}>{item.label}</a>
+              </li>
+            ))}
+            {SITE.mainSiteLive && (
+              <li>
+                <a href={SITE.mainSiteUrl}>{mainSiteHost}</a>
+              </li>
+            )}
+          </ul>
+        </nav>
+      )
+    }
+    {
+      contactFields.length > 0 && (
+        <ul class="footer-links" aria-label="Kontak">
+          {contactFields.map((f) => (
+            <li>
+              <a href={f.href} rel={f.key === 'email' ? undefined : 'noopener'}>
+                {f.label}: {f.value}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+    <p class="footer-copy">&copy; {year} {owner}</p>
+  </div>
+</footer>

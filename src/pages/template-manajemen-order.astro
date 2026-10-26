@@ -1,0 +1,135 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { readyPages } from '../config.js';
+import { getDownload } from '../lib/downloads.js';
+
+const path = '/template-manajemen-order/';
+const download = getDownload('template-manajemen-order.xlsx');
+const related = readyPages().filter((p) => p.nav && p.path !== path);
+
+const columns = [
+  ['Tanggal order', 'Tanggal pesanan masuk.'],
+  ['ID order', 'Kode internal Anda, misalnya ORD-0001.'],
+  ['Channel', 'Asal pesanan: marketplace, WhatsApp, Instagram, toko offline, dan lainnya.'],
+  ['Produk', 'Nama atau varian produk.'],
+  ['Jumlah, Harga satuan, Total', 'Total dihitung otomatis.'],
+  ['Status pembayaran', 'Belum bayar, Sudah bayar, atau Refund.'],
+  ['Status pengiriman', 'Baru, Dikemas, Dikirim, Diterima, Retur, atau Batal.'],
+  ['Kurir, No. resi', 'Diisi setelah paket dikirim.'],
+  ['Catatan', 'Permintaan khusus dari pembeli atau pengingat untuk Anda.'],
+];
+---
+
+<BaseLayout
+  title="Template Manajemen Order Online Shop Gratis"
+  description="Template gratis untuk mencatat pesanan dari semua channel, memantau status pembayaran dan pengiriman, dan melihat pesanan yang perlu dikirim. Format .xlsx."
+>
+  <Breadcrumb current="Template Manajemen Order" />
+
+  <h1>Template Manajemen Order Online Shop</h1>
+  <p class="lead">
+    Kumpulkan pesanan dari marketplace, chat, dan media sosial di satu spreadsheet. Lihat sekilas mana yang sudah dibayar,
+    mana yang perlu dikirim, dan berapa penjualan per channel.
+  </p>
+
+  {
+    download ? (
+      <p class="download-box">
+        <a class="button-primary" href={download.href} download>
+          Unduh template gratis
+        </a>
+        <span class="note">File .xlsx, {download.size}. Bisa dibuka di Microsoft Excel, Google Sheets, dan LibreOffice.</span>
+      </p>
+    ) : (
+      <p class="download-box note">File template sedang disiapkan dan belum bisa diunduh.</p>
+    )
+  }
+
+  <article class="content">
+    <h2>Alur kerja yang didukung</h2>
+    <ol>
+      <li>Pesanan masuk: tambahkan satu baris dengan status pembayaran <em>Belum bayar</em> atau <em>Sudah bayar</em>.</li>
+      <li>
+        Pesanan yang sudah dibayar tetapi belum dikirim (status <em>Baru</em> atau <em>Dikemas</em>) otomatis ditandai
+        kuning.
+      </li>
+      <li>Setelah dikirim, ubah status menjadi <em>Dikirim</em> dan isi kurir serta nomor resi.</li>
+      <li>Saat paket sampai, ubah status menjadi <em>Diterima</em>. Pesanan batal atau retur tetap tercatat.</li>
+      <li>Sheet Ringkasan menghitung jumlah pesanan per status dan penjualan per channel.</li>
+    </ol>
+    <p>
+      Butuh label alamat untuk pesanan yang akan dikirim? Gunakan{' '}
+      <a href="/generator-label-paket/">generator label paket</a>.
+    </p>
+
+    <h2>Kolom di sheet Order</h2>
+    <div class="table-scroll">
+      <table class="breakdown columns-table">
+        <caption>Kolom</caption>
+        <thead>
+          <tr><th scope="col">Kolom</th><th scope="col">Keterangan</th></tr>
+        </thead>
+        <tbody>
+          {
+            columns.map(([name, note]) => (
+              <tr>
+                <td>{name}</td>
+                <td>{note}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+    <p>
+      Pilihan channel, status, dan kurir bisa diubah di sheet <strong>Daftar</strong>. File berisi enam contoh pesanan
+      fiktif; hapus sebelum mulai mencatat.
+    </p>
+    <p>
+      Template ini sengaja tidak menyediakan kolom nama, alamat, atau nomor HP pembeli. Simpan data pribadi pembeli
+      seperlunya saja.
+    </p>
+
+    <h2>Contoh ringkasan</h2>
+    <p>
+      Dari enam contoh pesanan di dalam file: 2 pesanan perlu dikirim, 1 menunggu pembayaran, dan 1 dibatalkan dengan
+      refund. Total penjualan per channel hanya menghitung pesanan berstatus <em>Sudah bayar</em>.
+    </p>
+
+    <h2>Pertanyaan umum</h2>
+    <details>
+      <summary>Apakah pesanan dari marketplace masuk otomatis?</summary>
+      <p>
+        Tidak. Template ini tidak terhubung dengan marketplace atau kurir mana pun. Pesanan dicatat manual, misalnya
+        dengan menyalin ID dan detail pesanan dari pusat penjual.
+      </p>
+    </details>
+    <details>
+      <summary>Bisakah dipakai bersama tim di Google Sheets?</summary>
+      <p>
+        Bisa. Unggah file ke Google Drive, buka dengan Google Sheets, lalu bagikan ke anggota tim melalui fitur berbagi
+        Google Sheets.
+      </p>
+    </details>
+    <details>
+      <summary>Berapa banyak pesanan yang bisa dicatat?</summary>
+      <p>Rumus Total dan Ringkasan mencakup sampai 1.000 pesanan. Untuk periode berikutnya, simpan salinan file baru.</p>
+    </details>
+
+    {
+      related.length > 0 && (
+        <>
+          <h2>Tools dan template lainnya</h2>
+          <ul>
+            {related.map((p) => (
+              <li>
+                <a href={p.path}>{p.label}</a>
+              </li>
+            ))}
+          </ul>
+        </>
+      )
+    }
+  </article>
+</BaseLayout>

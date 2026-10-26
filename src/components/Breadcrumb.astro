@@ -1,0 +1,23 @@
+---
+/** Visible breadcrumb (Beranda › current page) with matching BreadcrumbList structured data. */
+import { SITE } from '../config.js';
+
+interface Props {
+  current: string;
+}
+
+const { current } = Astro.props;
+const jsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Beranda', item: `${SITE.url}/` },
+    { '@type': 'ListItem', position: 2, name: current, item: new URL(Astro.url.pathname, SITE.url).href },
+  ],
+}).replace(/</g, '\\u003c');
+---
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Beranda</a> <span aria-hidden="true">›</span> <span aria-current="page">{current}</span>
+</nav>
+<script type="application/ld+json" set:html={jsonLd} />

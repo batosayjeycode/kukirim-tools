@@ -1,0 +1,78 @@
+---
+// INTERNAL: plain-language draft, not legal advice. Pending owner review (incl. UU PDP);
+// tracked by LEGAL_REVIEW in src/config.js and `npm run check:launch`. Do not render review notes.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../config.js';
+
+const updated = '26 Oktober 2026';
+---
+
+<BaseLayout
+  title="Kebijakan Privasi"
+  description="Bagaimana Kukirim Tools menangani data: perhitungan dan file CSV diproses di browser Anda, tanpa akun dan tanpa unggah ke server."
+>
+  <article class="content content-page">
+    <h1>Kebijakan Privasi</h1>
+    <p class="note">Terakhir diperbarui: {updated}</p>
+
+    <p>
+      Kebijakan ini menjelaskan data apa yang diproses saat Anda menggunakan {SITE.name} ({SITE.url.replace('https://', '')})
+      dan bagaimana data tersebut ditangani. Ringkasnya: kami tidak meminta akun, dan data yang Anda masukkan ke tools
+      diproses di browser Anda sendiri.
+    </p>
+
+    <h2>Data yang Anda masukkan ke tools</h2>
+    <ul>
+      <li>
+        <strong>Kalkulator keuntungan:</strong> angka yang Anda isi dihitung di browser Anda. Angka tersebut tidak dikirim ke
+        server kami dan tidak disimpan setelah halaman ditutup.
+      </li>
+      <li>
+        <strong>Generator label paket, data penerima:</strong> data yang Anda ketik atau impor dari file CSV (nama, nomor HP,
+        alamat, catatan) dibaca dan diproses di browser Anda. Data ini tidak diunggah ke server kami, tidak disimpan di
+        perangkat Anda, dan hilang saat halaman ditutup atau dimuat ulang.
+      </li>
+      <li>
+        <strong>Generator label paket, data pengirim:</strong> data pengirim hanya disimpan di penyimpanan lokal browser
+        (<em>local storage</em>) perangkat Anda, dan hanya jika Anda mencentang "Simpan di browser ini". Data ini tidak
+        dikirim ke kami. Anda bisa menghapusnya kapan saja dengan tombol "Hapus data pengirim", menghapus centang, atau
+        menghapus data situs di pengaturan browser.
+      </li>
+      <li>
+        <strong>Template spreadsheet:</strong> file diunduh ke perangkat Anda. Apa pun yang Anda isi di dalamnya tidak pernah
+        dikirim ke kami.
+      </li>
+    </ul>
+
+    <h2>Data teknis yang diproses penyedia hosting</h2>
+    <p>
+      Situs ini di-host oleh penyedia layanan hosting pihak ketiga. Seperti situs web pada umumnya, saat Anda membuka
+      halaman, penyedia hosting memproses data teknis seperti alamat IP, jenis browser, halaman yang diminta, dan waktu
+      akses untuk mengirimkan halaman dan menjaga keamanan layanan. Data ini tidak berisi angka atau data penerima yang Anda
+      masukkan ke tools.
+    </p>
+
+    <h2>Analitik, iklan, dan cookie</h2>
+    <p>
+      Saat ini kami tidak menggunakan layanan analitik, iklan, atau pelacak pihak ketiga. Kode tools di situs ini tidak
+      memasang cookie. Penyedia hosting dapat menggunakan cookie atau teknologi serupa untuk keamanan dan pengiriman
+      layanan.
+      Jika kami menambahkan analitik di kemudian hari, kami akan memilih layanan yang menghormati privasi, tidak mengirim isi
+      yang Anda masukkan ke tools, dan memperbarui kebijakan ini sebelum mulai menggunakannya.
+    </p>
+
+    <h2>Tautan ke situs lain</h2>
+    <p>
+      Halaman kami dapat berisi tautan ke situs lain. Kebijakan privasi situs tersebut berlaku saat Anda mengunjunginya.
+    </p>
+
+    <h2>Perubahan kebijakan</h2>
+    <p>
+      Kebijakan ini dapat diperbarui jika layanan berubah, misalnya saat menambahkan analitik, produk berbayar, atau tautan
+      afiliasi. Tanggal pembaruan terakhir tercantum di bagian atas halaman ini.
+    </p>
+
+    <h2>Pertanyaan</h2>
+    <p>Untuk pertanyaan tentang privasi, gunakan saluran di halaman <a href="/kontak/">Kontak</a>.</p>
+  </article>
+</BaseLayout>

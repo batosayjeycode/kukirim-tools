@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE, CONTACT, getContactFields } from '../config.js';
+
+const fields = getContactFields();
+const operator = CONTACT.businessName?.trim();
+---
+
+<BaseLayout
+  title="Kontak"
+  description="Hubungi Kukirim Tools untuk masukan, pertanyaan, atau laporan masalah pada tools dan template."
+>
+  <article class="content content-page">
+    <h1>Kontak</h1>
+    <p class="lead">
+      Punya masukan, menemukan hasil yang keliru, atau butuh fitur tertentu? Kami senang mendengarnya.
+    </p>
+
+    {
+      fields.length > 0 ? (
+        <>
+          {operator && <p>{SITE.name} dikelola oleh {operator}.</p>}
+          <ul class="contact-list">
+            {fields.map((f) => (
+              <li>
+                <strong>{f.label}:</strong>{' '}
+                <a href={f.href} rel={f.key === 'email' ? undefined : 'noopener'}>
+                  {f.value}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </>
+      ) : (
+        <p>Saluran kontak sedang disiapkan.</p>
+      )
+    }
+
+    <h2>Sebelum menghubungi kami</h2>
+    <ul>
+      <li>
+        Jangan kirim data pelanggan Anda (nama, alamat, nomor HP) atau file CSV berisi data pribadi. Jika melaporkan masalah
+        CSV, cukup jelaskan pesan error dan nomor barisnya, atau gunakan data contoh.
+      </li>
+      <li>
+        Kami tidak bisa membantu urusan akun marketplace, pencairan dana, atau pengiriman paket. Hubungi platform atau kurir
+        terkait untuk hal tersebut.
+      </li>
+    </ul>
+    <p>Untuk pertanyaan tentang data pribadi, lihat juga <a href="/privasi/">Kebijakan Privasi</a>.</p>
+  </article>
+</BaseLayout>

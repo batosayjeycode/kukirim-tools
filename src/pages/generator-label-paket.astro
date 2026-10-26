@@ -1,0 +1,226 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import Field from '../components/Field.astro';
+import { readyPages } from '../config.js';
+import { MAX_ROWS } from '../lib/labels.js';
+import '../styles/labels.css';
+
+const path = '/generator-label-paket/';
+const related = readyPages().filter((p) => p.nav && p.path !== path);
+
+const csvColumns = [
+  ['nama_penerima', 'Wajib', 'Nama lengkap penerima'],
+  ['no_hp', 'Wajib', 'Format 08xx, 628xx, atau +628xx. Spasi, titik, dan tanda hubung boleh.'],
+  ['alamat', 'Wajib', 'Nama jalan, nomor rumah, RT/RW, patokan'],
+  ['kelurahan', 'Opsional', 'Kelurahan atau desa'],
+  ['kecamatan', 'Wajib', ''],
+  ['kota_kabupaten', 'Wajib', 'Contoh: Kota Bandung, Kab. Sleman'],
+  ['provinsi', 'Wajib', ''],
+  ['kode_pos', 'Opsional', '5 digit angka'],
+  ['catatan', 'Opsional', 'Catatan untuk kurir, maksimal 200 karakter'],
+];
+---
+
+<BaseLayout
+  title="Generator Label Paket Gratis"
+  description="Buat dan cetak label alamat paket dari isian manual atau file CSV. Ukuran thermal 100×150 mm atau A4 isi 8. Data diproses di browser, tidak diunggah."
+>
+  <style is:inline id="label-page-style"></style>
+
+  <Breadcrumb current="Generator Label Paket" />
+
+  <h1>Generator Label Paket</h1>
+  <p class="lead">
+    Tulis alamat penerima satu per satu atau impor banyak sekaligus dari file CSV, lalu cetak label yang rapi untuk
+    printer thermal atau kertas A4.
+  </p>
+  <p class="privacy-note">
+    Data penerima hanya diproses di browser Anda: tidak diunggah ke server dan hilang saat halaman ditutup.
+  </p>
+
+  <div id="label-tool" class="label-tool">
+    <noscript><p>Generator label ini membutuhkan JavaScript yang aktif di browser Anda.</p></noscript>
+
+    <section aria-labelledby="sender-heading" class="panel">
+      <h2 id="sender-heading">1. Data pengirim</h2>
+      <p class="field-hint">Opsional. Jika diisi, nama dan no. HP wajib benar.</p>
+      <form id="sender-form" novalidate>
+        <div class="field-row">
+          <Field id="pengirim_nama" label="Nama pengirim" inputmode="text" autocomplete="name" maxlength={100} />
+          <Field id="pengirim_no_hp" label="No. HP pengirim" inputmode="tel" autocomplete="tel" maxlength={20} />
+        </div>
+        <Field id="pengirim_nama_toko" label="Nama toko (opsional)" inputmode="text" autocomplete="organization" maxlength={100} />
+        <Field id="pengirim_alamat" label="Alamat pengirim (opsional)" inputmode="text" multiline autocomplete="street-address" maxlength={300} />
+        <label class="choice">
+          <input type="checkbox" id="sender-save" name="sender-save" />
+          Simpan di browser ini
+        </label>
+        <p class="field-hint">
+          Jika dicentang, data pengirim disimpan hanya di browser perangkat ini agar tidak perlu diisi ulang. Data penerima
+          tidak pernah disimpan.
+        </p>
+        <button type="button" id="sender-delete" class="button-secondary">Hapus data pengirim</button>
+        <p id="sender-status" class="status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section aria-labelledby="recipient-heading" class="panel">
+      <h2 id="recipient-heading">2. Data penerima</h2>
+
+      <details class="import-box" open>
+        <summary>Impor banyak penerima dari CSV</summary>
+        <p>
+          Pilih file CSV dengan kolom sesuai format di bawah (maksimal {MAX_ROWS} baris, 1 MB).{' '}
+          <a href="/downloads/contoh-label.csv" download>Unduh contoh CSV</a>.
+        </p>
+        <label class="file-label" for="csv-file">Pilih file CSV</label>
+        <input type="file" id="csv-file" accept=".csv,text/csv" />
+        <div id="import-report" class="import-report" role="status" aria-live="polite"></div>
+      </details>
+
+      <form id="recipient-form" novalidate>
+        <h3>Tambah satu penerima</h3>
+        <div class="field-row">
+          <Field id="penerima_nama_penerima" label="Nama penerima" inputmode="text" maxlength={100} />
+          <Field id="penerima_no_hp" label="No. HP penerima" inputmode="tel" maxlength={20} />
+        </div>
+        <Field id="penerima_alamat" label="Alamat" hint="Jalan, nomor rumah, RT/RW, patokan." inputmode="text" multiline maxlength={300} />
+        <div class="field-row">
+          <Field id="penerima_kelurahan" label="Kelurahan/desa (opsional)" inputmode="text" maxlength={100} />
+          <Field id="penerima_kecamatan" label="Kecamatan" inputmode="text" maxlength={100} />
+        </div>
+        <div class="field-row">
+          <Field id="penerima_kota_kabupaten" label="Kota/kabupaten" inputmode="text" maxlength={100} />
+          <Field id="penerima_provinsi" label="Provinsi" inputmode="text" maxlength={100} />
+        </div>
+        <div class="field-row">
+          <Field id="penerima_kode_pos" label="Kode pos (opsional)" inputmode="numeric" maxlength={5} />
+          <Field id="penerima_catatan" label="Catatan (opsional)" inputmode="text" maxlength={200} />
+        </div>
+        <button type="submit" class="button-primary">Tambahkan label</button>
+        <p id="recipient-status" class="status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section aria-labelledby="preview-heading" class="panel">
+      <h2 id="preview-heading">3. Pratinjau dan cetak</h2>
+      <form id="print-options" class="print-options">
+        <fieldset>
+          <legend>Ukuran label</legend>
+          <label class="choice"><input type="radio" name="ukuran" value="thermal" checked /> Thermal 100 × 150 mm (1 label per halaman)</label>
+          <label class="choice"><input type="radio" name="ukuran" value="a4" /> Kertas A4, 8 label per lembar (2 × 4, dengan garis potong)</label>
+        </fieldset>
+      </form>
+      <div class="actions">
+        <button type="button" id="print-labels" class="button-primary" disabled>Cetak / Simpan PDF</button>
+        <button type="button" id="clear-labels" class="button-secondary" hidden>Kosongkan daftar</button>
+      </div>
+      <p class="field-hint">
+        Di jendela cetak, pilih printer Anda atau "Simpan sebagai PDF". Atur skala ke 100% dan matikan header/footer
+        browser agar ukuran pas.
+      </p>
+      <p id="list-status" class="status" role="status" aria-live="polite" tabindex="-1"></p>
+      <ul id="label-preview" class="label-preview"></ul>
+    </section>
+  </div>
+
+  <div id="print-area" class="print-area" aria-hidden="true"></div>
+
+  <article class="content">
+    <h2>Format file CSV</h2>
+    <p>
+      Baris pertama berisi nama kolom. Huruf besar/kecil dan urutan kolom bebas, kolom lain akan diabaikan. Pemisah boleh
+      koma (<code>,</code>) atau titik koma (<code>;</code>). Teks yang berisi pemisah harus diapit tanda kutip, misalnya
+      <code>"Jl. Mawar No. 5, RT 01"</code>.
+    </p>
+    <div class="table-scroll">
+      <table class="breakdown columns-table">
+        <caption>Kolom CSV</caption>
+        <thead>
+          <tr><th scope="col">Kolom</th><th scope="col">Status</th><th scope="col">Keterangan</th></tr>
+        </thead>
+        <tbody>
+          {
+            csvColumns.map(([name, status, note]) => (
+              <tr>
+                <td><code>{name}</code></td>
+                <td>{status}</td>
+                <td>{note}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+    <p>
+      Dari Excel atau Google Sheets, simpan sebagai <strong>CSV UTF-8</strong> agar huruf khusus terbaca dengan benar.
+      Baris yang bermasalah ditampilkan beserta nomor barisnya; baris yang valid tetap bisa dicetak.
+    </p>
+
+    <h2>Contoh label</h2>
+    <p>Data fiktif. Label berisi blok penerima dan, jika diisi, blok pengirim:</p>
+    <pre class="label-sample">PENERIMA
+Contoh Penerima Satu
+081200000001
+Jl. Contoh Raya No. 12, RT 01/RW 02
+Kel. Sukasari, Kec. Coblong
+Kota Bandung, Jawa Barat 40135
+Catatan: Titip ke satpam
+
+PENGIRIM
+Toko Contoh
+081200009999</pre>
+
+    <h2>Pertanyaan umum</h2>
+    <details>
+      <summary>Apakah ini label resmi kurir atau marketplace?</summary>
+      <p>
+        Bukan. Ini label alamat umum tanpa nomor resi atau barcode. Jika kurir atau marketplace mewajibkan label resmi,
+        gunakan label dari sistem mereka.
+      </p>
+    </details>
+    <details>
+      <summary>Apakah data pelanggan saya diunggah?</summary>
+      <p>
+        Tidak. File CSV dibaca dan diproses di browser Anda. Data penerima tidak dikirim ke server dan tidak disimpan.
+        Hanya data pengirim yang bisa disimpan di browser Anda, dan hanya jika Anda mencentang "Simpan di browser ini".
+      </p>
+    </details>
+    <details>
+      <summary>Bagaimana cara menghapus data pengirim yang tersimpan?</summary>
+      <p>Klik "Hapus data pengirim" atau hapus centang "Simpan di browser ini".</p>
+    </details>
+    <details>
+      <summary>Ukuran label tidak pas saat dicetak. Apa yang harus diatur?</summary>
+      <p>
+        Di jendela cetak, pastikan ukuran kertas sesuai (100 × 150 mm untuk thermal atau A4), skala 100% atau "Actual
+        size", dan header/footer browser dimatikan. Untuk printer thermal, pastikan ukuran kertas di driver printer juga
+        100 × 150 mm.
+      </p>
+    </details>
+    <details>
+      <summary>Berapa banyak label yang bisa dibuat sekaligus?</summary>
+      <p>Maksimal {MAX_ROWS} label per daftar.</p>
+    </details>
+
+    {
+      related.length > 0 && (
+        <>
+          <h2>Tools lainnya</h2>
+          <ul>
+            {related.map((p) => (
+              <li>
+                <a href={p.path}>{p.label}</a>
+              </li>
+            ))}
+          </ul>
+        </>
+      )
+    }
+  </article>
+</BaseLayout>
+
+<script>
+  import '../scripts/label-generator.js';
+</script>

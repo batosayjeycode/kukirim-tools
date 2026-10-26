@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE, CONTACT, readyPages } from '../config.js';
+
+const tools = readyPages().filter((p) => p.nav);
+const operator = CONTACT.businessName?.trim();
+---
+
+<BaseLayout
+  title="Tentang Kukirim Tools"
+  description="Kukirim Tools menyediakan tools dan template gratis untuk seller online Indonesia. Tanpa akun, data diproses di browser Anda."
+>
+  <article class="content content-page">
+    <h1>Tentang {SITE.name}</h1>
+    <p class="lead">
+      {SITE.name} adalah kumpulan tools dan template gratis untuk penjual online di Indonesia: dari toko marketplace sampai
+      jualan lewat chat dan media sosial.
+    </p>
+    {operator && <p>{SITE.name} dikelola oleh {operator}.</p>}
+
+    <h2>Yang tersedia</h2>
+    <ul>
+      {
+        tools.map((p) => (
+          <li>
+            <a href={p.path}>{p.label}</a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <h2>Prinsip kami</h2>
+    <ul>
+      <li><strong>Gratis dan tanpa akun.</strong> Anda bisa langsung memakai tools tanpa mendaftar.</li>
+      <li>
+        <strong>Data tetap di perangkat Anda.</strong> Perhitungan dan file CSV diproses di browser Anda dan tidak diunggah
+        ke server kami.
+      </li>
+      <li>
+        <strong>Asumsi yang jelas.</strong> Setiap tool menjelaskan cara menghitung dan batasannya, dan Anda yang menentukan
+        angka seperti tarif biaya marketplace.
+      </li>
+      <li><strong>Jujur soal batasan.</strong> Kami tidak mengklaim sesuatu yang tidak bisa dilakukan tools ini.</li>
+    </ul>
+
+    <h2>Batasan</h2>
+    <ul>
+      <li>
+        {SITE.name} tidak berafiliasi dengan, dan tidak terhubung ke, marketplace, platform media sosial, atau jasa
+        pengiriman mana pun. Nama-nama tersebut disebut hanya sebagai contoh dan merupakan milik pemiliknya masing-masing.
+      </li>
+      <li>Hasil kalkulator adalah estimasi berdasarkan angka yang Anda masukkan, bukan nasihat keuangan atau pajak.</li>
+      <li>Label paket yang dihasilkan adalah label alamat umum, bukan label resmi kurir atau marketplace.</li>
+    </ul>
+
+    <h2>Masukan</h2>
+    <p>
+      Tools ini dikembangkan berdasarkan kebutuhan penjual. Jika ada yang membingungkan, salah, atau kurang, kami ingin tahu.
+      Lihat halaman <a href="/kontak/">Kontak</a>.
+    </p>
+  </article>
+</BaseLayout>

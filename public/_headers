@@ -1,0 +1,8 @@
+# Cloudflare Pages response headers.
+# Keep *.pages.dev deployments (production alias and previews) out of search indexes;
+# the canonical host is tools.kukirim.com.
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex
+
+https://:version.:project.pages.dev/*
+  X-Robots-Tag: noindex

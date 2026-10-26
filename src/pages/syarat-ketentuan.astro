@@ -1,0 +1,82 @@
+---
+// INTERNAL: plain-language draft, not legal advice. Pending owner review (incl. UU PDP);
+// tracked by LEGAL_REVIEW in src/config.js and `npm run check:launch`. Do not render review notes.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../config.js';
+
+const updated = '26 Oktober 2026';
+---
+
+<BaseLayout
+  title="Syarat dan Ketentuan"
+  description="Syarat penggunaan tools dan template Kukirim Tools: hasil berupa estimasi, bukan nasihat keuangan, pajak, atau hukum."
+>
+  <article class="content content-page">
+    <h1>Syarat dan Ketentuan</h1>
+    <p class="note">Terakhir diperbarui: {updated}</p>
+
+    <p>Dengan menggunakan {SITE.name}, Anda menyetujui syarat berikut.</p>
+
+    <h2>1. Layanan</h2>
+    <p>
+      {SITE.name} menyediakan tools berbasis browser dan template spreadsheet secara gratis, tanpa akun. Kami dapat mengubah,
+      menambah, atau menghentikan fitur kapan saja.
+    </p>
+
+    <h2>2. Hasil adalah estimasi</h2>
+    <ul>
+      <li>
+        Hasil kalkulator dan ringkasan template dihitung dari angka dan asumsi yang Anda masukkan. Hasil tersebut adalah
+        estimasi untuk membantu perencanaan.
+      </li>
+      <li>
+        Hasil tersebut bukan nasihat keuangan, pajak, akuntansi, atau hukum, dan bukan pernyataan resmi tentang tarif atau
+        kebijakan marketplace mana pun. Tarif dan aturan platform dapat berubah; periksa sumber resminya.
+      </li>
+      <li>Keputusan harga dan usaha yang Anda ambil berdasarkan hasil tersebut sepenuhnya menjadi tanggung jawab Anda.</li>
+    </ul>
+
+    <h2>3. Label paket</h2>
+    <p>
+      Label yang dihasilkan adalah label alamat umum, bukan label resmi kurir atau marketplace. Pastikan data alamat benar
+      dan label sesuai dengan ketentuan jasa pengiriman yang Anda gunakan sebelum mengirim paket.
+    </p>
+
+    <h2>4. Data pelanggan Anda</h2>
+    <p>
+      Jika Anda memasukkan data pribadi pelanggan (misalnya nama, alamat, dan nomor HP) ke generator label, Anda bertanggung
+      jawab memperoleh dan menggunakan data tersebut secara sah dan hanya untuk keperluan pengiriman. Data tersebut
+      diproses di browser Anda dan tidak kami terima; lihat <a href="/privasi/">Kebijakan Privasi</a>.
+    </p>
+
+    <h2>5. Template</h2>
+    <p>
+      Template boleh Anda gunakan, ubah, dan salin untuk keperluan usaha Anda sendiri. Template tidak boleh dijual kembali
+      atau dibagikan ulang sebagai produk Anda sendiri. Contoh data di dalam template bersifat fiktif.
+    </p>
+
+    <h2>6. Penggunaan yang wajar</h2>
+    <p>
+      Jangan menggunakan situs ini untuk tujuan yang melanggar hukum, atau dengan cara yang mengganggu atau membebani layanan.
+    </p>
+
+    <h2>7. Tanpa jaminan</h2>
+    <p>
+      Tools dan template disediakan "sebagaimana adanya". Kami berusaha agar perhitungan akurat dan diuji, tetapi tidak
+      menjamin bebas dari kesalahan atau selalu tersedia. Sejauh diizinkan oleh hukum yang berlaku, kami tidak bertanggung
+      jawab atas kerugian yang timbul dari penggunaan situs ini.
+    </p>
+
+    <h2>8. Merek pihak lain</h2>
+    <p>
+      Nama marketplace, platform, dan jasa pengiriman yang disebut di situs ini adalah milik pemiliknya masing-masing dan
+      disebut hanya sebagai contoh. {SITE.name} tidak berafiliasi dengan pihak-pihak tersebut.
+    </p>
+
+    <h2>9. Perubahan syarat</h2>
+    <p>
+      Syarat ini dapat diperbarui sewaktu-waktu. Tanggal pembaruan terakhir tercantum di bagian atas halaman ini. Pertanyaan
+      dapat disampaikan melalui halaman <a href="/kontak/">Kontak</a>.
+    </p>
+  </article>
+</BaseLayout>

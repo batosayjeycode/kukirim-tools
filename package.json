@@ -1,0 +1,28 @@
+{
+  "name": "kukirim-tools",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Kukirim Tools \u2014 tools gratis untuk seller online Indonesia (tools.kukirim.com)",
+  "engines": {
+    "node": ">=22.23.4"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check:seo": "node scripts/check-seo.mjs",
+    "check:launch": "node scripts/check-launch.mjs",
+    "verify": "npm run build && npm test && npm run check:seo"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^7.4.2"
+  },
+  "devDependencies": {
+    "happy-dom": "^21.0.4",
+    "vitest": "^5.0.5"
+  }
+}

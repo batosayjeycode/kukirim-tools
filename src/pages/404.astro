@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { readyPages } from '../config.js';
+
+const tools = readyPages().filter((p) => p.nav);
+---
+
+<BaseLayout title="Halaman tidak ditemukan" description="Halaman yang Anda cari tidak ditemukan." noindex>
+  <article class="content content-page">
+    <h1>Halaman tidak ditemukan</h1>
+    <p class="lead">Alamat ini mungkin salah ketik atau halamannya sudah dipindahkan.</p>
+    <p><a class="button-primary" href="/">Kembali ke beranda</a></p>
+    {
+      tools.length > 0 && (
+        <>
+          <h2>Mungkin Anda mencari</h2>
+          <ul>
+            {tools.map((p) => (
+              <li>
+                <a href={p.path}>{p.label}</a>
+              </li>
+            ))}
+          </ul>
+        </>
+      )
+    }
+  </article>
+</BaseLayout>

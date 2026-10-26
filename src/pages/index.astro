@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE, PAGES } from '../config.js';
+
+const featured = PAGES.filter((p) => p.nav);
+const tools = featured.filter((p) => p.kind === 'tool');
+const templates = featured.filter((p) => p.kind === 'template');
+const calculator = tools.find((p) => p.path === '/kalkulator-keuntungan/' && p.ready);
+
+const sections = [
+  { id: 'tools', heading: 'Tools gratis', items: tools },
+  { id: 'templates', heading: 'Template spreadsheet gratis', items: templates },
+].filter((s) => s.items.length > 0);
+---
+
+<BaseLayout title="Beranda" description={SITE.description}>
+  <section class="hero">
+    <h1>{SITE.tagline}</h1>
+    <p class="lead">
+      Hitung keuntungan, siapkan label paket, dan rapikan pembukuan toko online Anda. Gratis, tanpa daftar akun, dan
+      data diproses langsung di browser Anda.
+    </p>
+    {calculator && <a class="button-primary" href={calculator.path}>Hitung keuntungan sekarang</a>}
+  </section>
+
+  {
+    sections.map((s) => (
+      <section aria-labelledby={`${s.id}-heading`} class="home-section">
+        <h2 id={`${s.id}-heading`}>{s.heading}</h2>
+        <ul class="card-list">
+          {s.items.map((p) => (
+            <li class="card">
+              <h3 class="card-title">{p.ready ? <a href={p.path}>{p.label}</a> : p.label}</h3>
+              {p.summary && <p class="card-summary">{p.summary}</p>}
+              {!p.ready && <span class="badge">Segera hadir</span>}
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+
+  <section aria-labelledby="audience-heading" class="home-section content">
+    <h2 id="audience-heading">Untuk siapa {SITE.name}?</h2>
+    <p>
+      Untuk penjual online skala kecil dan menengah yang berjualan di marketplace, lewat chat, media sosial, atau
+      gabungan semuanya, dan masih banyak mengelola pesanan secara manual atau dengan spreadsheet.
+    </p>
+    <ul>
+      <li>Tidak perlu membuat akun atau memasang aplikasi.</li>
+      <li>Angka dan data pelanggan yang Anda masukkan tidak diunggah ke server kami.</li>
+      <li>
+        Setiap tool menjelaskan asumsi dan cara hitungnya. Tarif marketplace tidak kami tetapkan; Anda yang mengisinya.
+      </li>
+    </ul>
+    <p>
+      {SITE.name} tidak berafiliasi dengan marketplace atau jasa pengiriman mana pun.{' '}
+      <a href="/tentang/">Tentang kami</a>.
+    </p>
+  </section>
+</BaseLayout>

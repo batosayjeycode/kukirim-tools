@@ -1,0 +1,27 @@
+---
+import { SITE, readyPages } from '../config.js';
+
+const navItems = readyPages().filter((p) => p.nav);
+const current = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="/">{SITE.name}</a>
+    {
+      navItems.length > 0 && (
+        <nav aria-label="Navigasi utama">
+          <ul class="nav-list">
+            {navItems.map((item) => (
+              <li>
+                <a href={item.path} aria-current={current === item.path ? 'page' : undefined}>
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )
+    }
+  </div>
+</header>

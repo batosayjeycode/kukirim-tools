@@ -1,0 +1,31 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+.astro/
+
+# environment & secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.dev.vars
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# OS / editor
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# test coverage
+coverage/
+
+# Cloudflare
+.wrangler/

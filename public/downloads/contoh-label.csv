@@ -1,0 +1,4 @@
+nama_penerima,no_hp,alamat,kelurahan,kecamatan,kota_kabupaten,provinsi,kode_pos,catatan
+Contoh Penerima Satu,0812-0000-0001,"Jl. Contoh Raya No. 12, RT 01/RW 02",Sukasari,Coblong,Kota Bandung,Jawa Barat,40135,Titip ke satpam
+Contoh Penerima Dua,+62 812 0000 0002,Perumahan Contoh Indah Blok B3 No. 7,,Sukolilo,Kota Surabaya,Jawa Timur,,
+Contoh Penerima Tiga,081200000003,Jl. Fiktif No. 45,Pedungan,Denpasar Selatan,Kota Denpasar,Bali,80222,"Barang pecah belah, mohon hati-hati"

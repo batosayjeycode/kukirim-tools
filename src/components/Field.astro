@@ -1,0 +1,70 @@
+---
+/** Text input with label, optional hint, and an error slot filled by page scripts. */
+interface Props {
+  id: string;
+  label: string;
+  hint?: string;
+  prefix?: string;
+  suffix?: string;
+  inputmode?: 'decimal' | 'numeric' | 'text' | 'tel';
+  placeholder?: string;
+  value?: string;
+  required?: boolean;
+  multiline?: boolean;
+  autocomplete?: string;
+  maxlength?: number;
+}
+
+const {
+  id,
+  label,
+  hint,
+  prefix,
+  suffix,
+  inputmode = 'decimal',
+  placeholder,
+  value,
+  required = false,
+  multiline = false,
+  autocomplete = 'off',
+  maxlength,
+} = Astro.props;
+const describedBy = [hint && `${id}-hint`, `${id}-error`].filter(Boolean).join(' ');
+---
+
+<div class="field">
+  <label for={id}>{label}</label>
+  {hint && <p class="field-hint" id={`${id}-hint`}>{hint}</p>}
+  <div class="input-wrap">
+    {prefix && <span class="affix" aria-hidden="true">{prefix}</span>}
+    {
+      multiline ? (
+        <textarea
+          id={id}
+          name={id}
+          rows="2"
+          autocomplete={autocomplete}
+          placeholder={placeholder}
+          required={required}
+          maxlength={maxlength}
+          aria-describedby={describedBy}
+        >{value}</textarea>
+      ) : (
+        <input
+          type="text"
+          id={id}
+          name={id}
+          inputmode={inputmode}
+          autocomplete={autocomplete}
+          placeholder={placeholder}
+          value={value}
+          required={required}
+          maxlength={maxlength}
+          aria-describedby={describedBy}
+        />
+      )
+    }
+    {suffix && <span class="affix" aria-hidden="true">{suffix}</span>}
+  </div>
+  <p class="field-error" id={`${id}-error`} hidden></p>
+</div>

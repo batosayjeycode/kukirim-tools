@@ -1,0 +1,136 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { readyPages } from '../config.js';
+import { getDownload } from '../lib/downloads.js';
+
+const path = '/template-pembukuan-online-shop/';
+const download = getDownload('template-pembukuan-online-shop.xlsx');
+const related = readyPages().filter((p) => p.nav && p.path !== path);
+---
+
+<BaseLayout
+  title="Template Pembukuan Online Shop Gratis"
+  description="Unduh gratis template pembukuan online shop: catat pemasukan dan pengeluaran, lihat laba per bulan dan per kategori. File .xlsx untuk Excel dan Google Sheets."
+>
+  <Breadcrumb current="Template Pembukuan" />
+
+  <h1>Template Pembukuan Online Shop</h1>
+  <p class="lead">
+    Spreadsheet sederhana untuk mencatat uang masuk dan keluar toko online Anda, lalu melihat laba per bulan secara
+    otomatis. Gratis, tanpa daftar.
+  </p>
+
+  {
+    download ? (
+      <p class="download-box">
+        <a class="button-primary" href={download.href} download>
+          Unduh template gratis
+        </a>
+        <span class="note">File .xlsx, {download.size}. Bisa dibuka di Microsoft Excel, Google Sheets, dan LibreOffice.</span>
+      </p>
+    ) : (
+      <p class="download-box note">File template sedang disiapkan dan belum bisa diunduh.</p>
+    )
+  }
+
+  <article class="content">
+    <h2>Isi template</h2>
+    <div class="table-scroll">
+      <table class="breakdown columns-table">
+        <caption>Sheet di dalam file</caption>
+        <thead>
+          <tr><th scope="col">Sheet</th><th scope="col">Fungsi</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Petunjuk</td><td>Cara pakai dan penjelasan setiap kolom.</td></tr>
+          <tr>
+            <td>Transaksi</td>
+            <td>
+              Satu baris per pemasukan atau pengeluaran: tanggal, jenis, kategori, keterangan, channel, dan jumlah. Jenis,
+              kategori, dan channel dipilih dari daftar.
+            </td>
+          </tr>
+          <tr>
+            <td>Ringkasan</td>
+            <td>Pemasukan, pengeluaran, laba bersih, dan margin per bulan untuk tahun yang Anda pilih, plus total per kategori.</td>
+          </tr>
+          <tr><td>Kategori</td><td>Daftar kategori dan channel penjualan yang bisa Anda ubah sesuai toko.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>File berisi contoh data fiktif agar Anda bisa melihat cara kerjanya. Hapus contoh tersebut sebelum mulai mencatat.</p>
+
+    <h2>Cara pakai</h2>
+    <ol>
+      <li>Unduh file, lalu buka di Excel atau LibreOffice.</li>
+      <li>Untuk Google Sheets: unggah file ke Google Drive, lalu buka dengan Google Sheets.</li>
+      <li>Sesuaikan daftar kategori dan channel di sheet <strong>Kategori</strong>.</li>
+      <li>Hapus contoh data di sheet <strong>Transaksi</strong>, lalu catat transaksi Anda.</li>
+      <li>Isi tahun di sheet <strong>Ringkasan</strong>. Ringkasan bulanan dan per kategori terisi otomatis.</li>
+    </ol>
+
+    <h2>Contoh ringkasan</h2>
+    <p>Dari contoh data fiktif di dalam file (dua bulan pertama sebuah toko kaos):</p>
+    <div class="table-scroll">
+      <table class="breakdown">
+        <caption>Contoh ringkasan bulanan</caption>
+        <thead>
+          <tr><th scope="col">Bulan</th><th scope="col" class="num">Pemasukan</th><th scope="col" class="num">Pengeluaran</th><th scope="col" class="num">Laba bersih</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">September</th><td>Rp 2.695.000</td><td>Rp 2.345.000</td><td>Rp 350.000</td></tr>
+          <tr><th scope="row">Oktober</th><td>Rp 2.170.000</td><td>Rp 1.095.000</td><td>Rp 1.075.000</td></tr>
+          <tr class="total"><th scope="row">Total</th><td>Rp 4.865.000</td><td>Rp 3.440.000</td><td>Rp 1.425.000</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      Laba September terlihat kecil karena pembelian stok awal dicatat sebagai pengeluaran di bulan itu. Ini pembukuan
+      berbasis kas sederhana: uang dicatat saat masuk atau keluar.
+    </p>
+
+    <h2>Pertanyaan umum</h2>
+    <details>
+      <summary>Apakah template ini terhubung otomatis dengan marketplace?</summary>
+      <p>
+        Tidak. Semua data diisi manual. Template ini tidak mengambil data dari Shopee, Tokopedia, TikTok Shop, atau
+        marketplace lain.
+      </p>
+    </details>
+    <details>
+      <summary>Bagaimana mencatat penjualan dari marketplace?</summary>
+      <p>
+        Pilih satu cara dan konsisten: catat jumlah yang dicairkan ke rekening Anda, atau catat penjualan kotor lalu catat
+        biaya marketplace sebagai pengeluaran terpisah. Untuk menghitung laba per produk, gunakan{' '}
+        <a href="/kalkulator-keuntungan/">kalkulator keuntungan</a>.
+      </p>
+    </details>
+    <details>
+      <summary>Apakah bisa dipakai untuk laporan pajak?</summary>
+      <p>
+        Template ini adalah catatan sederhana untuk membantu memantau usaha, bukan laporan keuangan resmi atau perhitungan
+        pajak. Untuk kewajiban pajak, ikuti ketentuan yang berlaku atau konsultasikan dengan pihak yang berwenang.
+      </p>
+    </details>
+    <details>
+      <summary>Berapa banyak transaksi yang bisa dicatat?</summary>
+      <p>Rumus ringkasan membaca sampai 2.000 baris transaksi. Untuk tahun berikutnya, simpan salinan file baru.</p>
+    </details>
+
+    {
+      related.length > 0 && (
+        <>
+          <h2>Tools dan template lainnya</h2>
+          <ul>
+            {related.map((p) => (
+              <li>
+                <a href={p.path}>{p.label}</a>
+              </li>
+            ))}
+          </ul>
+        </>
+      )
+    }
+  </article>
+</BaseLayout>

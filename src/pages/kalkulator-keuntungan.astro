@@ -1,0 +1,243 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import Field from '../components/Field.astro';
+import { readyPages } from '../config.js';
+
+const path = '/kalkulator-keuntungan/';
+const related = readyPages().filter((p) => p.nav && p.path !== path);
+---
+
+<BaseLayout
+  title="Kalkulator Keuntungan Jualan Online"
+  description="Hitung laba bersih, margin, dan harga impas produk setelah diskon, biaya marketplace, ongkir, dan kemasan. Gratis, tanpa daftar, dihitung di browser Anda."
+>
+  <Breadcrumb current="Kalkulator Keuntungan" />
+
+  <h1>Kalkulator Keuntungan Jualan Online</h1>
+  <p class="lead">
+    Harga jual belum tentu sama dengan untung. Masukkan harga, HPP, diskon, dan biaya marketplace untuk melihat estimasi
+    laba bersih per unit, margin, dan harga jual minimal agar tidak rugi.
+  </p>
+
+  <div class="tool">
+    <form id="profit-form" class="tool-form" novalidate>
+      <fieldset>
+        <legend>Harga dan modal (per unit)</legend>
+        <Field id="price" label="Harga jual" hint="Harga yang tercantum di toko, sebelum diskon." prefix="Rp" placeholder="100.000" />
+        <Field id="cost" label="Modal produk (HPP)" prefix="Rp" placeholder="60.000" />
+      </fieldset>
+
+      <fieldset>
+        <legend>Diskon (per unit, opsional)</legend>
+        <div class="field-row">
+          <Field id="discountValue" label="Besar diskon" placeholder="0" />
+          <div class="field">
+            <label for="discountType">Jenis</label>
+            <select id="discountType" name="discountType">
+              <option value="fixed">Rupiah (Rp)</option>
+              <option value="percent">Persen (%)</option>
+            </select>
+          </div>
+        </div>
+        <div class="field" role="radiogroup" aria-labelledby="discountFunder-label">
+          <p id="discountFunder-label" class="label">Siapa yang menanggung diskon?</p>
+          <label class="choice"><input type="radio" name="discountFunder" value="seller" checked /> Penjual (mengurangi pendapatan Anda)</label>
+          <label class="choice"><input type="radio" name="discountFunder" value="platform" /> Platform/marketplace (tidak mengurangi pendapatan Anda)</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Biaya marketplace (per unit)</legend>
+        <p class="field-hint">Isi sesuai tarif di akun penjual Anda. Tarif berbeda antar marketplace, kategori, dan program.</p>
+        <Field id="feePct" label="Biaya persentase" suffix="%" placeholder="0" />
+        <div class="field">
+          <label for="feeBase">Biaya persentase dihitung dari</label>
+          <select id="feeBase" name="feeBase">
+            <option value="revenue">Harga setelah diskon penjual (umum)</option>
+            <option value="listed">Harga jual awal, sebelum diskon penjual</option>
+          </select>
+        </div>
+        <Field id="feeFixed" label="Biaya tetap per unit" hint="Misalnya biaya layanan atau proses per produk, jika ada." prefix="Rp" placeholder="0" />
+      </fieldset>
+
+      <fieldset>
+        <legend>Biaya per pesanan</legend>
+        <Field id="shipping" label="Subsidi ongkir yang Anda bayar" prefix="Rp" placeholder="0" />
+        <Field id="packaging" label="Kemasan" prefix="Rp" placeholder="0" />
+        <Field id="other" label="Biaya lain" prefix="Rp" placeholder="0" />
+        <Field id="qty" label="Jumlah unit per pesanan" hint="Biaya per pesanan dibagi rata ke setiap unit." inputmode="numeric" value="1" />
+      </fieldset>
+
+      <div class="actions">
+        <button type="submit" class="button-primary">Hitung</button>
+        <button type="reset" class="button-secondary">Reset</button>
+        <button type="button" id="profit-example" class="button-link">Isi dengan contoh</button>
+      </div>
+    </form>
+
+    <section class="tool-results" aria-labelledby="results-heading">
+      <h2 id="results-heading">Hasil estimasi</h2>
+      <noscript><p>Kalkulator ini membutuhkan JavaScript yang aktif di browser Anda.</p></noscript>
+      <p id="profit-status" class="status" role="status" aria-live="polite"></p>
+
+      <div id="profit-results" tabindex="-1" hidden>
+        <dl class="summary">
+          <div>
+            <dt>Laba bersih per unit</dt>
+            <dd class="summary-main" data-out="profit"></dd>
+          </div>
+          <div>
+            <dt>Total laba (<span data-out="qty"></span> unit)</dt>
+            <dd data-out="totalProfit"></dd>
+          </div>
+          <div>
+            <dt>Margin dari pendapatan</dt>
+            <dd data-out="margin"></dd>
+          </div>
+          <div>
+            <dt>Harga jual impas</dt>
+            <dd data-out="breakEven"></dd>
+          </div>
+        </dl>
+
+        <table class="breakdown">
+          <caption>Rincian per unit</caption>
+          <tbody>
+            <tr><th scope="row">Harga jual</th><td data-out="price"></td></tr>
+            <tr data-row="sellerDiscount"><th scope="row">Diskon penjual</th><td data-out="sellerDiscount"></td></tr>
+            <tr class="subtotal"><th scope="row">Pendapatan</th><td data-out="revenue"></td></tr>
+            <tr>
+              <th scope="row">Biaya marketplace (persentase)<span class="note" data-out="feePercentNote"></span></th>
+              <td data-out="feePercent"></td>
+            </tr>
+            <tr data-row="feeFixed"><th scope="row">Biaya marketplace (tetap)</th><td data-out="feeFixed"></td></tr>
+            <tr><th scope="row">Modal produk (HPP)</th><td data-out="cost"></td></tr>
+            <tr data-row="orderCosts">
+              <th scope="row">Ongkir, kemasan, dan biaya lain<span class="note" data-out="orderCostsNote"></span></th>
+              <td data-out="orderCosts"></td>
+            </tr>
+            <tr class="total"><th scope="row">Laba bersih per unit</th><td data-out="profitRow"></td></tr>
+          </tbody>
+        </table>
+        <p class="note" data-row="platformDiscount">
+          Diskon dari platform sebesar <span data-out="platformDiscount"></span> per unit tidak dikurangkan dari pendapatan
+          Anda.
+        </p>
+        <p class="note">
+          Angka ditampilkan dalam rupiah bulat. Harga impas dibulatkan ke atas. Semua hasil adalah estimasi berdasarkan
+          angka yang Anda masukkan.
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <article class="content">
+    <h2>Cara kalkulator ini menghitung</h2>
+    <p>Semua angka dihitung per unit. Biaya per pesanan dibagi dengan jumlah unit dalam pesanan tersebut.</p>
+    <ol>
+      <li><strong>Pendapatan</strong> = harga jual − diskon yang ditanggung penjual.</li>
+      <li>
+        <strong>Biaya marketplace</strong> = persentase × dasar biaya + biaya tetap. Dasar biaya bisa harga setelah diskon
+        penjual atau harga jual awal, sesuai pilihan Anda.
+      </li>
+      <li><strong>Biaya per pesanan per unit</strong> = (subsidi ongkir + kemasan + biaya lain) ÷ jumlah unit.</li>
+      <li><strong>Laba bersih per unit</strong> = pendapatan − HPP − biaya marketplace − biaya per pesanan per unit.</li>
+      <li><strong>Margin</strong> = laba bersih ÷ pendapatan × 100%.</li>
+      <li>
+        <strong>Harga impas</strong> adalah harga jual awal yang membuat laba bersih tepat nol, dengan diskon dan biaya yang
+        sama. Jika persentase biaya dan diskon terlalu besar, tidak ada harga yang bisa menutup biaya.
+      </li>
+    </ol>
+    <p>
+      Yang <strong>tidak</strong> dihitung: pajak, biaya iklan, biaya penarikan dana, retur, dan biaya operasional bulanan
+      seperti gaji atau sewa. Masukkan ke "biaya lain" jika ingin menyertakannya.
+    </p>
+
+    <h2>Contoh perhitungan</h2>
+    <p>
+      Sebuah toko menjual produk seharga Rp 100.000 dengan modal Rp 60.000. Penjual memberi diskon 10%, biaya marketplace
+      8% dari harga setelah diskon ditambah Rp 1.000 per unit. Satu pesanan berisi 2 unit, dengan subsidi ongkir Rp 5.000,
+      kemasan Rp 2.000, dan biaya lain Rp 1.000.
+    </p>
+    <table class="breakdown">
+      <caption>Contoh (data fiktif)</caption>
+      <tbody>
+        <tr><th scope="row">Harga jual</th><td>Rp 100.000</td></tr>
+        <tr><th scope="row">Diskon penjual 10%</th><td>−Rp 10.000</td></tr>
+        <tr class="subtotal"><th scope="row">Pendapatan</th><td>Rp 90.000</td></tr>
+        <tr><th scope="row">Biaya marketplace 8% × Rp 90.000</th><td>−Rp 7.200</td></tr>
+        <tr><th scope="row">Biaya marketplace tetap</th><td>−Rp 1.000</td></tr>
+        <tr><th scope="row">Modal produk (HPP)</th><td>−Rp 60.000</td></tr>
+        <tr><th scope="row">Biaya per pesanan Rp 8.000 ÷ 2 unit</th><td>−Rp 4.000</td></tr>
+        <tr class="total"><th scope="row">Laba bersih per unit</th><td>Rp 17.800</td></tr>
+      </tbody>
+    </table>
+    <p>
+      Total laba untuk 2 unit adalah Rp 35.600, dengan margin sekitar 19,8%. Harga impasnya sekitar Rp 78.503: di bawah
+      harga itu, penjualan ini merugi.
+    </p>
+
+    <h2>Pertanyaan umum</h2>
+    <details>
+      <summary>Apakah tarif biaya marketplace di sini sudah pasti benar?</summary>
+      <p>
+        Tidak. Kalkulator ini tidak mengambil tarif dari marketplace mana pun. Tarif bisa berbeda menurut kategori, program,
+        dan waktu, dan cara marketplace menghitungnya juga bisa berbeda. Cek tarif terbaru di pusat penjual Anda, lalu
+        masukkan angkanya di sini.
+      </p>
+    </details>
+    <details>
+      <summary>Apa bedanya diskon penjual dan diskon platform?</summary>
+      <p>
+        Diskon penjual dibayar dari kantong Anda, sehingga mengurangi pendapatan. Diskon atau voucher yang ditanggung
+        platform tetap membuat Anda menerima harga penuh, sehingga tidak mengurangi pendapatan dalam perhitungan ini.
+      </p>
+    </details>
+    <details>
+      <summary>Kenapa biaya ongkir dan kemasan dibagi jumlah unit?</summary>
+      <p>
+        Biaya tersebut dibayar sekali per pesanan. Agar laba per unit akurat, biaya itu dibagi rata ke semua unit dalam
+        pesanan.
+      </p>
+    </details>
+    <details>
+      <summary>Apa itu harga impas?</summary>
+      <p>
+        Harga jual awal terendah agar laba bersih tidak negatif, dengan asumsi diskon dan biaya yang sama. Menjual di atas
+        harga impas menghasilkan laba; di bawahnya merugi.
+      </p>
+    </details>
+    <details>
+      <summary>Apakah angka yang saya masukkan disimpan?</summary>
+      <p>
+        Tidak. Perhitungan dilakukan sepenuhnya di browser Anda. Angka tidak dikirim ke server dan tidak disimpan setelah
+        halaman ditutup.
+      </p>
+    </details>
+
+    {
+      related.length > 0 && (
+        <>
+          <h2>Tools lainnya</h2>
+          <ul>
+            {related.map((p) => (
+              <li>
+                <a href={p.path}>{p.label}</a>
+              </li>
+            ))}
+          </ul>
+        </>
+      )
+    }
+
+    <p class="disclaimer">
+      Hasil kalkulator ini adalah estimasi untuk membantu perencanaan, bukan nasihat keuangan, pajak, atau hukum, dan bukan
+      kebijakan resmi marketplace mana pun.
+    </p>
+  </article>
+</BaseLayout>
+
+<script>
+  import '../scripts/profit-calculator.js';
+</script>

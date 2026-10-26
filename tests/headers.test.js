@@ -41,10 +41,10 @@ describe('security headers', () => {
     expect(all['Strict-Transport-Security']).toMatch(/^max-age=\d+/);
   });
 
-  it('allows only same-origin scripts and no network requests', () => {
+  it('allows only same-origin scripts and requests', () => {
     expect(csp['default-src']).toBe("'self'");
     expect(csp['script-src']).toBe("'self'");
-    expect(csp['connect-src']).toBe("'none'");
+    expect(csp['connect-src']).toBe("'self'");
     expect(csp['object-src']).toBe("'none'");
     expect(csp['frame-ancestors']).toBe("'none'");
   });

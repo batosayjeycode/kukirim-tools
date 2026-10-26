@@ -1,11 +1,13 @@
 # Cloudflare Pages response headers.
 
 # Security headers for every page. The site loads only its own scripts, styles and
-# images and makes no network requests. style-src needs 'unsafe-inline' because Astro
-# inlines small stylesheets and the label generator sets @page size in a <style>.
+# images and makes no requests to other hosts. connect-src is 'self' (not 'none') because
+# Lighthouse fetches /robots.txt from the page and reports it invalid when blocked.
+# style-src needs 'unsafe-inline' because Astro inlines small stylesheets and the label
+# generator sets @page size in a <style>.
 # Adding analytics or any third-party script requires updating this policy (and /privasi/).
 /*
-  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin

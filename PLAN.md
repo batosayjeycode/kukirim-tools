@@ -108,7 +108,7 @@ Edge cases:
 
 - JavaScript with JSDoc; Vitest for unit tests; `@astrojs/sitemap`; plain CSS; no CSV library; no `AdSlot` component.
 - Analytics deferred to P1 (Cloudflare Web Analytics; page views only).
-- Astro 7.x on Node ≥ 22.23.4 (`.nvmrc` = `22`). Astro ≤ 7.3.1 has published security advisories; do not downgrade.
+- Astro 7.x on Node ≥ 22.23.4 (`.nvmrc` pins `22.23.4`: CI runners cache an older 22.x that Astro rejects). Astro ≤ 7.3.1 has published security advisories; do not downgrade.
 
 ### 0.9 Implementation roadmap
 

@@ -515,6 +515,8 @@ The implementation may adjust this structure if Astro conventions or test toolin
 - [ ] Run a production build and smoke tests before launch.
 - [ ] `npm run check:launch` passes (contact details set, legal drafts reviewed).
 - [ ] Review `/privasi/` whenever Cloudflare security, bot protection, analytics, or any other feature that may set cookies or process visitor data is enabled; update the public policy if actual behavior changes.
+- [ ] Before enabling any Cloudflare feature that injects scripts (Web Analytics, Rocket Loader, email obfuscation, bot challenges), update the Content-Security-Policy in `public/_headers`; otherwise the CSP blocks it.
+- [ ] After deploy, confirm the security headers (CSP, `nosniff`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, HSTS) are served on `tools.kukirim.com`.
 
 Do not introduce redirect rules until the canonical-host behavior is understood and tested. Avoid redirect loops.
 

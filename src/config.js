@@ -21,7 +21,7 @@ export const SITE = {
 /** @type {{ businessName: string | null, email: string | null, whatsapp: string | null, instagram: string | null }} */
 export const CONTACT = {
   businessName: 'Kukirim Digital',
-  email: 'jey.owner@gmail.com',
+  email: 'halo@kukirim.com',
   whatsapp: null,
   instagram: null,
 };

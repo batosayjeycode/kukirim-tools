@@ -125,14 +125,14 @@ Work one step at a time; each step needs owner review before the next starts. A 
 | 7 | Info pages (tentang, kontak, privasi, syarat-ketentuan) + 404 | 1 | Pages build; no placeholder text rendered | done 2026-10-26 |
 | 8 | SEO pass: titles, descriptions, canonical, OG, sitemap, internal links | 3, 5, 6, 7 | Build output verified for every route (`npm run check:seo`: 0 errors, 0 warnings) | done 2026-10-26 |
 | 9 | QA: tests, build, accessibility, mobile, link check; README update | 8 | §9 production checks (local items) ticked | done 2026-10-26 |
-| 10 | Deployment: GitHub, Cloudflare Pages, custom domain, Search Console (owner performs account steps) | 9 + real contact details | Live HTTPS verified on `tools.kukirim.com` | pending |
-| 11 | Main site `kukirim-web` (separate repository) | 10 | Out of scope for this repository | pending |
+| 10 | Deployment: GitHub, Cloudflare Pages, custom domain, Search Console (owner performs account steps) | 9 + real contact details | Live HTTPS verified on `tools.kukirim.com` | done 2026-10-31 |
+| 11 | Main site `kukirim-web` (separate repository) | 10 | Out of scope for this repository | done 2026-10-31 |
 
 Post-launch integration tasks (not part of the MVP steps above):
 
 | # | Task | Depends on | Completion criteria | Status |
 |---|---|---|---|---|
-| P1 | Link to `kukirim.com` from this site | 11 deployed and reachable | Set `SITE.mainSiteLive = true` in `src/config.js` (footer link renders automatically); add header/nav or in-content links only if useful; build passes | pending |
+| P1 | Link to `kukirim.com` from this site | 11 deployed and reachable | Set `SITE.mainSiteLive = true` in `src/config.js` (footer link renders automatically); add header/nav or in-content links only if useful; build passes | done 2026-10-31 |
 
 Legal pages: `/privasi/` and `/syarat-ketentuan/` are plain-language texts (not legal advice), reviewed by the owner on 2026-10-26 (`LEGAL_REVIEW` both `true`). The privacy page names the operator (`CONTACT.businessName`, `CONTACT.email`), Cloudflare as host with possible processing outside Indonesia, and how to make data requests. Re-review and reset the flag whenever data handling changes. The public pages show no review notices; status is tracked internally by `LEGAL_REVIEW` in `src/config.js`, and `npm run check:launch` fails until both are `true`. Do not add the operator's legal identity or a governing-law clause unless the owner supplies verified details.
 

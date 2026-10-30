@@ -15,20 +15,22 @@ const year = new Date().getFullYear();
     </p>
     {
       infoLinks.length > 0 && (
-        <nav aria-label="Informasi">
+        <nav aria-label="Navigasi footer">
           <ul class="footer-links">
             {infoLinks.map((item) => (
               <li>
                 <a href={item.path}>{item.label}</a>
               </li>
             ))}
-            {SITE.mainSiteLive && (
-              <li>
-                <a href={SITE.mainSiteUrl}>{mainSiteHost}</a>
-              </li>
-            )}
           </ul>
         </nav>
+      )
+    }
+    {
+      SITE.mainSiteLive && (
+        <p class="footer-note">
+          Bagian dari Kukirim: <a href={SITE.mainSiteUrl}>{mainSiteHost}</a>
+        </p>
       )
     }
     {

@@ -7,6 +7,9 @@ export default defineConfig({
   trailingSlash: 'always',
   build: {
     format: 'directory',
+    // Inline stylesheets so they are not render-blocking requests
+    // (allowed by style-src 'unsafe-inline' in public/_headers).
+    inlineStylesheets: 'always',
   },
   integrations: [sitemap()],
 });

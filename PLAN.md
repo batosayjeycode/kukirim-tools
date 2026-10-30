@@ -93,7 +93,7 @@ Edge cases:
 
 ### 0.6 Main site `kukirim.com`
 
-- **Approved:** `kukirim.com` lives in a **separate repository, `kukirim-site`**, deployed as its own Cloudflare Pages project. This repository (`kukirim-tools`) contains only the tools site for `tools.kukirim.com`.
+- **Approved:** `kukirim.com` lives in a **separate repository, `kukirim-web`**, deployed as its own Cloudflare Pages project. This repository (`kukirim-tools`) contains only the tools site for `tools.kukirim.com`.
 - Content: SEO landing page for Indonesian sellers, guides/articles (`/panduan/...`), links to free templates and to `tools.kukirim.com`.
 - No backend, accounts, or database.
 - Built only **after** the tools MVP is complete (§0.9 Step 11), sharing visual style only, not code.
@@ -126,7 +126,7 @@ Work one step at a time; each step needs owner review before the next starts. A 
 | 8 | SEO pass: titles, descriptions, canonical, OG, sitemap, internal links | 3, 5, 6, 7 | Build output verified for every route (`npm run check:seo`: 0 errors, 0 warnings) | done 2026-10-26 |
 | 9 | QA: tests, build, accessibility, mobile, link check; README update | 8 | §9 production checks (local items) ticked | done 2026-10-26 |
 | 10 | Deployment: GitHub, Cloudflare Pages, custom domain, Search Console (owner performs account steps) | 9 + real contact details | Live HTTPS verified on `tools.kukirim.com` | pending |
-| 11 | Main site `kukirim-site` (separate repository) | 10 | Out of scope for this repository | pending |
+| 11 | Main site `kukirim-web` (separate repository) | 10 | Out of scope for this repository | pending |
 
 Post-launch integration tasks (not part of the MVP steps above):
 

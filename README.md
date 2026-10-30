@@ -2,7 +2,7 @@
 
 Source for **https://tools.kukirim.com** — free browser-based tools for Indonesian online sellers (profit calculator, parcel-label generator, spreadsheet templates).
 
-The main SEO site `kukirim.com` lives in a separate repository, `kukirim-site`.
+The main SEO site `kukirim.com` lives in a separate repository, `kukirim-web`.
 
 See [`PLAN.md`](./PLAN.md) for scope, approved decisions (§0), and the step-by-step roadmap with current status (§0.9).
 

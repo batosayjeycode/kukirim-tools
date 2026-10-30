@@ -11,7 +11,7 @@ export const SITE = {
   url: 'https://tools.kukirim.com',
   mainSiteUrl: 'https://kukirim.com',
   /** Set to true only once kukirim.com is deployed; the footer link appears automatically. */
-  mainSiteLive: false,
+  mainSiteLive: true,
   tagline: 'Tools Gratis untuk Seller Online Indonesia',
   description:
     'Tools gratis untuk seller online Indonesia: kalkulator keuntungan, generator label paket, dan template spreadsheet. Tanpa daftar akun, diproses di browser Anda.',

@@ -3,11 +3,23 @@ import { SITE, readyPages } from '../config.js';
 
 const navItems = readyPages().filter((p) => p.nav);
 const current = Astro.url.pathname;
+// "Kukirim Tools" → bold "Kukirim" (same wordmark as kukirim.com) + accent "Tools".
+const [brandMain, ...rest] = SITE.name.split(' ');
+const brandSub = rest.join(' ');
 ---
 
 <header class="site-header">
   <div class="container header-inner">
-    <a class="brand" href="/">{SITE.name}</a>
+    <a class="brand" href="/" aria-label={`${SITE.name}: beranda`}>
+      <svg class="brand-mark" width="28" height="28" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+        <rect width="32" height="32" rx="6" fill="var(--color-accent)"></rect>
+        <g fill="none" stroke="var(--color-on-accent)" stroke-width="2" stroke-linejoin="round">
+          <path d="M8 11l8-4 8 4v10l-8 4-8-4z"></path>
+          <path d="M8 11l8 4 8-4M16 15v10"></path>
+        </g>
+      </svg>
+      <span class="brand-name">{brandMain}{brandSub && <span class="brand-sub"> {brandSub}</span>}</span>
+    </a>
     {
       navItems.length > 0 && (
         <nav aria-label="Navigasi utama">

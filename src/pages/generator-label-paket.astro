@@ -1,13 +1,30 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
+import RelatedGuides from '../components/RelatedGuides.astro';
 import Field from '../components/Field.astro';
 import { readyPages } from '../config.js';
+import { webApplication } from '../lib/schema.js';
 import { MAX_ROWS } from '../lib/labels.js';
 import '../styles/labels.css';
 
 const path = '/generator-label-paket/';
 const related = readyPages().filter((p) => p.nav && p.path !== path);
+const description =
+  'Buat dan cetak label pengiriman paket dari isian manual atau file CSV. Ukuran thermal 100×150 mm atau A4 isi 8. Data diproses di browser, tidak diunggah.';
+const jsonLd = [
+  webApplication({
+    name: 'Generator Label Pengiriman Paket',
+    path,
+    description,
+    featureList: [
+      'Isian manual satu per satu',
+      'Impor banyak alamat dari file CSV',
+      'Label thermal 100 × 150 mm',
+      'Kertas A4 isi 8 label',
+    ],
+  }),
+];
 
 const csvColumns = [
   ['nama_penerima', 'Wajib', 'Nama lengkap penerima'],
@@ -23,17 +40,19 @@ const csvColumns = [
 ---
 
 <BaseLayout
-  title="Generator Label Paket Gratis"
-  description="Buat dan cetak label alamat paket dari isian manual atau file CSV. Ukuran thermal 100×150 mm atau A4 isi 8. Data diproses di browser, tidak diunggah."
+  title="Generator & Cetak Label Pengiriman Paket"
+  description={description}
+  jsonLd={jsonLd}
+  image={{ src: '/images/og-generator-label-paket.png', alt: 'Generator dan cetak label pengiriman paket: thermal 100×150 mm, A4 isi 8, impor CSV' }}
 >
   <style is:inline id="label-page-style"></style>
 
-  <Breadcrumb current="Generator Label Paket" />
+  <Breadcrumb current="Generator Label Pengiriman Paket" />
 
-  <h1>Generator Label Paket</h1>
+  <h1>Generator &amp; Cetak Label Pengiriman Paket</h1>
   <p class="lead">
-    Tulis alamat penerima satu per satu atau impor banyak sekaligus dari file CSV, lalu cetak label yang rapi untuk
-    printer thermal atau kertas A4.
+    Tulis alamat penerima satu per satu atau impor banyak sekaligus dari file CSV, lalu cetak label pengiriman yang rapi
+    untuk printer thermal atau kertas A4. Gratis dan tanpa daftar akun.
   </p>
   <p class="privacy-note">
     Data penerima hanya diproses di browser Anda: tidak diunggah ke server dan hilang saat halaman ditutup.
@@ -171,6 +190,19 @@ Catatan: Titip ke satpam
 PENGIRIM
 Toko Contoh
 081200009999</pre>
+    <figure class="preview">
+      <div class="preview-scroll">
+        <img
+          src="/images/pratinjau-label-pengiriman.svg"
+          width="720"
+          height="470"
+          loading="lazy"
+          decoding="async"
+          alt="Pratinjau hasil cetak label pengiriman: satu label thermal 100 × 150 mm berisi blok penerima dan pengirim, dan satu lembar A4 berisi 8 label dalam 2 kolom dan 4 baris dengan garis potong."
+        />
+      </div>
+      <figcaption>Tata letak cetak: thermal 100 × 150 mm atau A4 isi 8 label. Data fiktif.</figcaption>
+    </figure>
 
     <h2>Pertanyaan umum</h2>
     <details>
@@ -203,6 +235,8 @@ Toko Contoh
       <summary>Berapa banyak label yang bisa dibuat sekaligus?</summary>
       <p>Maksimal {MAX_ROWS} label per daftar.</p>
     </details>
+
+    <RelatedGuides path={path} />
 
     {
       related.length > 0 && (

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
+import RelatedGuides from '../components/RelatedGuides.astro';
 import { readyPages } from '../config.js';
 import { getDownload } from '../lib/downloads.js';
 
@@ -10,12 +11,13 @@ const related = readyPages().filter((p) => p.nav && p.path !== path);
 ---
 
 <BaseLayout
-  title="Template Pembukuan Online Shop Gratis"
+  title="Template Pembukuan Online Shop Excel Gratis"
   description="Unduh gratis template pembukuan online shop: catat pemasukan dan pengeluaran, lihat laba per bulan dan per kategori. File .xlsx untuk Excel dan Google Sheets."
+  image={{ src: '/images/og-template-pembukuan-online-shop.png', alt: 'Template pembukuan online shop (Excel): pemasukan, pengeluaran, dan laba per bulan' }}
 >
   <Breadcrumb current="Template Pembukuan" />
 
-  <h1>Template Pembukuan Online Shop</h1>
+  <h1>Template Pembukuan Online Shop (Excel)</h1>
   <p class="lead">
     Spreadsheet sederhana untuk mencatat uang masuk dan keluar toko online Anda, lalu melihat laba per bulan secara
     otomatis. Gratis, tanpa daftar.
@@ -35,6 +37,20 @@ const related = readyPages().filter((p) => p.nav && p.path !== path);
   }
 
   <article class="content">
+    <figure class="preview">
+      <div class="preview-scroll">
+        <img
+          src="/images/pratinjau-template-pembukuan.svg"
+          width="770"
+          height="328"
+          loading="lazy"
+          decoding="async"
+          alt="Pratinjau sheet Transaksi pada template pembukuan online shop: kolom Tanggal, Jenis, Kategori, Keterangan, Channel, dan Jumlah, berisi contoh pemasukan dari Shopee, WhatsApp, dan Tokopedia serta pengeluaran stok, kemasan, dan iklan."
+        />
+      </div>
+      <figcaption>Sheet Transaksi dengan contoh data fiktif. Sheet Ringkasan menghitung laba per bulan dan per kategori.</figcaption>
+    </figure>
+
     <h2>Isi template</h2>
     <div class="table-scroll">
       <table class="breakdown columns-table">
@@ -117,6 +133,8 @@ const related = readyPages().filter((p) => p.nav && p.path !== path);
       <summary>Berapa banyak transaksi yang bisa dicatat?</summary>
       <p>Rumus ringkasan membaca sampai 2.000 baris transaksi. Untuk tahun berikutnya, simpan salinan file baru.</p>
     </details>
+
+    <RelatedGuides path={path} />
 
     {
       related.length > 0 && (

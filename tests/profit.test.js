@@ -305,3 +305,62 @@ describe('calculateProfit — validation', () => {
     expect(r.profit).toBe(37500);
   });
 });
+
+describe('target margin price', () => {
+  const base = { cost: 60000, feePct: 8, feeFixed: 1000, shipping: 5000, packaging: 2000, other: 1000, qty: 2 };
+  const cases = [
+    ['no discount', {}],
+    ['fixed seller discount, revenue base', { discount: { value: 5000, type: 'fixed', funder: 'seller' }, feeBase: 'revenue' }],
+    ['fixed seller discount, listed base', { discount: { value: 5000, type: 'fixed', funder: 'seller' }, feeBase: 'listed' }],
+    ['percent seller discount, revenue base', { discount: { value: 10, type: 'percent', funder: 'seller' }, feeBase: 'revenue' }],
+    ['percent seller discount, listed base', { discount: { value: 10, type: 'percent', funder: 'seller' }, feeBase: 'listed' }],
+    ['platform-funded discount', { discount: { value: 10, type: 'percent', funder: 'platform' }, feeBase: 'listed' }],
+  ];
+
+  it.each(cases)('selling at the target price yields the target margin (%s)', (_, extra) => {
+    for (const target of [0, 12.5, 20, 40]) {
+      const first = calculateProfit({ ...base, ...extra, price: 100000, targetMarginPct: target });
+      expect(first.ok).toBe(true);
+      const tp = first.ok && first.result.targetPrice;
+      expect(tp && tp.ok).toBe(true);
+      const price = tp && tp.ok ? tp.price : NaN;
+      const check = calculateProfit({ ...base, ...extra, price });
+      expect(check.ok && check.result.margin).toBeCloseTo(target, 6);
+    }
+  });
+
+  it('equals the break-even price at a 0% target', () => {
+    const r = calculateProfit({ ...base, price: 100000, discount: { value: 10, type: 'percent', funder: 'seller' }, targetMarginPct: '0' });
+    expect(r.ok && r.result.targetPrice?.ok && r.result.breakEven.ok).toBe(true);
+    if (r.ok && r.result.targetPrice?.ok && r.result.breakEven.ok) {
+      expect(r.result.targetPrice.price).toBeCloseTo(r.result.breakEven.price, 9);
+    }
+  });
+
+  it('matches the guide formula without discount: cost ÷ (1 − fee% − target%)', () => {
+    const r = calculateProfit({ price: 1, cost: 40000, feePct: 10, targetMarginPct: 20 });
+    expect(r.ok && r.result.targetPrice).toEqual({ ok: true, price: 40000 / 0.7, marginPct: 20 });
+  });
+
+  it('is null when no target is entered', () => {
+    for (const targetMarginPct of [undefined, null, '', '  ']) {
+      const r = calculateProfit({ price: 100000, cost: 50000, targetMarginPct });
+      expect(r.ok && r.result.targetPrice).toBeNull();
+    }
+  });
+
+  it('reports an unreachable target instead of Infinity or a negative price', () => {
+    for (const [feePct, targetMarginPct, extra] of [[30, 70, {}], [50, 60, {}], [10, 80, { discount: { value: 50, type: 'percent', funder: 'seller' }, feeBase: 'listed' }]]) {
+      const r = calculateProfit({ price: 100000, cost: 50000, feePct, targetMarginPct, ...extra });
+      expect(r.ok && r.result.targetPrice).toEqual({ ok: false, reason: 'no-finite-target-price', marginPct: targetMarginPct });
+    }
+  });
+
+  it('validates the target margin', () => {
+    for (const [value, message] of [['100', 'Target margin harus di bawah 100%.'], ['-5', 'Nilai tidak boleh negatif.'], ['abc', 'Masukkan angka yang valid.']]) {
+      const r = calculateProfit({ price: 100000, cost: 50000, targetMarginPct: value });
+      expect(r.ok).toBe(false);
+      expect(!r.ok && r.errors).toContainEqual({ field: 'targetMarginPct', message });
+    }
+  });
+});

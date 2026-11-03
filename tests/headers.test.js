@@ -49,8 +49,13 @@ describe('security headers', () => {
     expect(csp['frame-ancestors']).toBe("'none'");
   });
 
-  it('keeps noindex on pages.dev hosts', () => {
+  it('keeps noindex on pages.dev hosts and deployment previews', () => {
     expect(rules['https://:project.pages.dev/*']).toEqual({ 'X-Robots-Tag': 'noindex' });
+    expect(rules['https://:version.:project.pages.dev/*']).toEqual({ 'X-Robots-Tag': 'noindex' });
+  });
+
+  it('caches hashed /_astro/ bundles immutably', () => {
+    expect(rules['/_astro/*']).toEqual({ 'Cache-Control': 'public, max-age=31536000, immutable' });
   });
 });
 

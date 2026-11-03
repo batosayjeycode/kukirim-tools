@@ -8,6 +8,7 @@ const SITE = 'https://tools.kukirim.com';
 const TITLE_MAX = 65;
 const DESC_MIN = 70;
 const DESC_MAX = 160;
+const REQUIRED_FILES = ['robots.txt', 'sitemap-index.xml', '_headers', '404.html', 'images/og-default.png', 'favicon.svg', 'apple-touch-icon.png'];
 
 /** @param {string} dir @returns {string[]} */
 function htmlFiles(dir) {
@@ -45,6 +46,7 @@ const warnings = [];
 const titles = new Map();
 const descriptions = new Map();
 const sitemap = existsSync(join(DIST, 'sitemap-0.xml')) ? readFileSync(join(DIST, 'sitemap-0.xml'), 'utf8') : '';
+const indexableRoutes = new Set();
 
 for (const file of htmlFiles(DIST)) {
   const route = routeOf(file);
@@ -74,12 +76,23 @@ for (const file of htmlFiles(DIST)) {
   const h1s = all(html, /<h1[\s>]/g);
   if (h1s.length !== 1) err(`expected 1 <h1>, found ${h1s.length}`);
 
+  const levels = all(html, /<h([1-6])[\s>]/g).map(Number);
+  levels.forEach((level, i) => {
+    if (i > 0 && level > levels[i - 1] + 1) err(`heading jumps from h${levels[i - 1]} to h${level}`);
+  });
+
+  for (const img of html.match(/<img\b[^>]*>/g) ?? []) {
+    if (!/\balt="/.test(img)) err('<img> without alt');
+    if (!/\bwidth="\d+"/.test(img) || !/\bheight="\d+"/.test(img)) err('<img> without width/height');
+  }
+
   const canonical = one(html, /<link rel="canonical" href="([^"]*)"/);
   if (noindex) {
     if (canonical) err('noindex page should not declare a canonical URL');
     if (route !== '/404') err('unexpected noindex');
     if (sitemap.includes(`<loc>${SITE}${route}</loc>`)) err('noindex page is in the sitemap');
   } else {
+    indexableRoutes.add(route);
     if (canonical !== `${SITE}${route}`) err(`canonical ${canonical} ≠ ${SITE}${route}`);
     if (!sitemap.includes(`<loc>${SITE}${route}</loc>`)) err('missing from sitemap');
     for (const prop of ['og:title', 'og:description', 'og:url', 'og:image', 'og:image:alt']) {
@@ -90,7 +103,9 @@ for (const file of htmlFiles(DIST)) {
     if (one(html, /<meta property="og:url" content="([^"]*)"/) !== canonical) err('og:url ≠ canonical');
   }
 
-  for (const json of all(html, /<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
+  const jsonLdBlocks = all(html, /<script type="application\/ld\+json">([\s\S]*?)<\/script>/g);
+  if (!noindex && jsonLdBlocks.length === 0) err('indexable page has no JSON-LD');
+  for (const json of jsonLdBlocks) {
     try {
       JSON.parse(json);
     } catch {
@@ -111,6 +126,18 @@ for (const file of htmlFiles(DIST)) {
     else if (!/\.[a-z0-9]+$/i.test(href.split(/[?#]/)[0]) && !href.split(/[?#]/)[0].endsWith('/')) err(`link without trailing slash ${href}`);
     else if (!resolves(href)) err(`broken link ${href}`);
   }
+}
+
+// Every sitemap URL must be a built, indexable page with a lastmod (src/config.js).
+for (const entry of all(sitemap, /<url>([\s\S]*?)<\/url>/g)) {
+  const loc = one(entry, /<loc>([^<]+)<\/loc>/) ?? '';
+  const route = loc.startsWith(SITE) ? loc.slice(SITE.length) : loc;
+  if (!indexableRoutes.has(route)) errors.push(`sitemap: ${loc} is not an indexable page`);
+  if (!/<lastmod>\d{4}-\d{2}-\d{2}/.test(entry)) errors.push(`sitemap: ${loc} has no lastmod`);
+}
+
+for (const required of REQUIRED_FILES) {
+  if (!existsSync(join(DIST, required))) errors.push(`dist: missing ${required}`);
 }
 
 const pages = titles.size;

@@ -8,12 +8,26 @@ interface Props {
   title: string;
   description: string;
   noindex?: boolean;
+  /** Social preview image (1200 × 630, under /images/). */
+  image?: { src: string; alt: string };
+  /** Schema.org nodes, emitted as one JSON-LD @graph in <head>. */
+  jsonLd?: Record<string, unknown>[];
 }
 
-const { title, description, noindex = false } = Astro.props;
+const {
+  title,
+  description,
+  noindex = false,
+  image = { src: '/images/og-default.png', alt: `${SITE.name}: ${SITE.tagline}` },
+  jsonLd = [],
+} = Astro.props;
 const canonical = new URL(Astro.url.pathname, SITE.url).href;
-const ogImage = new URL('/images/og-default.png', SITE.url).href;
+const ogImage = new URL(image.src, SITE.url).href;
 const fullTitle = Astro.url.pathname === '/' ? `${SITE.name} — ${SITE.tagline}` : `${title} | ${SITE.name}`;
+const structuredData =
+  jsonLd.length > 0
+    ? JSON.stringify({ '@context': 'https://schema.org', '@graph': jsonLd }).replace(/</g, '\\u003c')
+    : null;
 ---
 
 <!doctype html>
@@ -23,8 +37,10 @@ const fullTitle = Astro.url.pathname === '/' ? `${SITE.name} — ${SITE.tagline}
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
+    {noindex ? <meta name="robots" content="noindex, follow" /> : <link rel="canonical" href={canonical} />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#0b6e4f" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={SITE.name} />
@@ -35,8 +51,9 @@ const fullTitle = Astro.url.pathname === '/' ? `${SITE.name} — ${SITE.tagline}
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content={`${SITE.name}: ${SITE.tagline}`} />
+    <meta property="og:image:alt" content={image.alt} />
     <meta name="twitter:card" content="summary_large_image" />
+    {structuredData && <script type="application/ld+json" set:html={structuredData} />}
   </head>
   <body>
     <a class="skip-link" href="#main">Langsung ke konten</a>

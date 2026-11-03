@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="732" height="328" viewBox="0 0 732 328" font-family="Arial, Helvetica, sans-serif" role="img">
+<rect width="732" height="328" rx="8" fill="#ffffff" stroke="#d5dcd8"/>
+<rect width="732" height="44" rx="8" fill="#f2f5f3"/>
+<rect y="36" width="732" height="8" fill="#f2f5f3"/>
+<circle cx="18" cy="22" r="5" fill="#d5dcd8"/><circle cx="34" cy="22" r="5" fill="#d5dcd8"/><circle cx="50" cy="22" r="5" fill="#d5dcd8"/>
+<text x="70" y="27" font-size="14" font-weight="bold" fill="#1b2420" text-anchor="start">template-manajemen-order.xlsx — Order</text>
+<rect x="1" y="44" width="730" height="30" fill="#0b6e4f"/>
+<text x="9" y="64" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="start">Tanggal</text>
+<text x="101" y="64" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="start">ID order</text>
+<text x="187" y="64" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="start">Channel</text>
+<text x="285" y="64" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="start">Produk</text>
+<text x="521" y="64" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="end">Total</text>
+<text x="537" y="64" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="start">Pembayaran</text>
+<text x="643" y="64" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="start">Pengiriman</text>
+<line x1="1" y1="104" x2="731" y2="104" stroke="#e3e8e5"/>
+<text x="9" y="94" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">20/10/2026</text>
+<text x="101" y="94" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">ORD-0001</text>
+<text x="187" y="94" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Shopee</text>
+<text x="285" y="94" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Kaos polos hitam L</text>
+<text x="521" y="94" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="end">Rp150.000</text>
+<text x="537" y="94" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Sudah bayar</text>
+<text x="643" y="94" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Diterima</text>
+<line x1="1" y1="134" x2="731" y2="134" stroke="#e3e8e5"/>
+<text x="9" y="124" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">21/10/2026</text>
+<text x="101" y="124" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">ORD-0002</text>
+<text x="187" y="124" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">WhatsApp</text>
+<text x="285" y="124" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Kaos polos putih M</text>
+<text x="521" y="124" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="end">Rp75.000</text>
+<text x="537" y="124" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Sudah bayar</text>
+<text x="643" y="124" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Dikirim</text>
+<rect x="1" y="134" width="730" height="30" fill="#fff2a8"/>
+<line x1="1" y1="164" x2="731" y2="164" stroke="#e3e8e5"/>
+<text x="9" y="154" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">22/10/2026</text>
+<text x="101" y="154" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">ORD-0003</text>
+<text x="187" y="154" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Tokopedia</text>
+<text x="285" y="154" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Hoodie abu XL</text>
+<text x="521" y="154" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="end">Rp185.000</text>
+<text x="537" y="154" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Sudah bayar</text>
+<text x="643" y="154" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Dikemas</text>
+<line x1="1" y1="194" x2="731" y2="194" stroke="#e3e8e5"/>
+<text x="9" y="184" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">23/10/2026</text>
+<text x="101" y="184" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">ORD-0004</text>
+<text x="187" y="184" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Instagram</text>
+<text x="285" y="184" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Kaos polos navy S</text>
+<text x="521" y="184" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="end">Rp210.000</text>
+<text x="537" y="184" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Belum bayar</text>
+<text x="643" y="184" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Baru</text>
+<rect x="1" y="194" width="730" height="30" fill="#fff2a8"/>
+<line x1="1" y1="224" x2="731" y2="224" stroke="#e3e8e5"/>
+<text x="9" y="214" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">23/10/2026</text>
+<text x="101" y="214" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">ORD-0005</text>
+<text x="187" y="214" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">TikTok Shop</text>
+<text x="285" y="214" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Topi bordir</text>
+<text x="521" y="214" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="end">Rp55.000</text>
+<text x="537" y="214" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Sudah bayar</text>
+<text x="643" y="214" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Baru</text>
+<line x1="1" y1="254" x2="731" y2="254" stroke="#e3e8e5"/>
+<text x="9" y="244" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">24/10/2026</text>
+<text x="101" y="244" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">ORD-0006</text>
+<text x="187" y="244" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Shopee</text>
+<text x="285" y="244" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Kaos polos hitam M</text>
+<text x="521" y="244" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="end">Rp75.000</text>
+<text x="537" y="244" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Refund</text>
+<text x="643" y="244" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Batal</text>
+<line x1="93" y1="74" x2="93" y2="254" stroke="#e3e8e5"/>
+<line x1="179" y1="74" x2="179" y2="254" stroke="#e3e8e5"/>
+<line x1="277" y1="74" x2="277" y2="254" stroke="#e3e8e5"/>
+<line x1="437" y1="74" x2="437" y2="254" stroke="#e3e8e5"/>
+<line x1="529" y1="74" x2="529" y2="254" stroke="#e3e8e5"/>
+<line x1="635" y1="74" x2="635" y2="254" stroke="#e3e8e5"/>
+<text x="12" y="276" font-size="12" font-weight="normal" fill="#55615b" text-anchor="start">Kuning: sudah dibayar tetapi belum dikirim. Contoh data fiktif.</text>
+<rect x="8" y="296" width="76" height="24" rx="4" fill="#f2f5f3" stroke="#d5dcd8"/>
+<text x="16" y="313" font-size="12" font-weight="normal" fill="#55615b" text-anchor="start">Petunjuk</text>
+<rect x="90.0" y="296" width="54" height="24" rx="4" fill="#ffffff" stroke="#0b6e4f"/>
+<text x="98.0" y="313" font-size="12" font-weight="bold" fill="#0b6e4f" text-anchor="start">Order</text>
+<rect x="149.5" y="296" width="84" height="24" rx="4" fill="#f2f5f3" stroke="#d5dcd8"/>
+<text x="157.5" y="313" font-size="12" font-weight="normal" fill="#55615b" text-anchor="start">Ringkasan</text>
+<rect x="239.0" y="296" width="61" height="24" rx="4" fill="#f2f5f3" stroke="#d5dcd8"/>
+<text x="247.0" y="313" font-size="12" font-weight="normal" fill="#55615b" text-anchor="start">Daftar</text>
+</svg>

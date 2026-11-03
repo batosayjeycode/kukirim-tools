@@ -573,6 +573,42 @@ button:disabled:hover {
   align-items: center;
 }
 
+/* SVG previews of templates and printed labels. */
+.preview {
+  margin: 1.5rem 0;
+}
+
+.preview-scroll {
+  overflow-x: auto;
+}
+
+/* Keep spreadsheet text readable on phones; the image scrolls sideways instead of shrinking. */
+.preview img {
+  display: block;
+  width: 100%;
+  min-width: 36rem;
+  height: auto;
+}
+
+.preview figcaption {
+  margin-top: 0.5rem;
+  color: var(--color-muted);
+  font-size: 0.875rem;
+}
+
+/* Shareable calculation link (kalkulator-keuntungan). */
+.share {
+  margin: 1.25rem 0 1.5rem;
+}
+
+.share .field-hint {
+  margin: 0.5rem 0 0;
+}
+
+.share .field-hint:empty {
+  display: none;
+}
+
 /* ---------- Tool layout ---------- */
 
 .tool {

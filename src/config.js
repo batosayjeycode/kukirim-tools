@@ -9,13 +9,15 @@
 export const SITE = {
   name: 'Kukirim Tools',
   url: 'https://tools.kukirim.com',
-  mainSiteUrl: 'https://kukirim.com',
+  mainSiteUrl: 'https://kukirim.com/',
   /** Set to true only once kukirim.com is deployed; the footer link appears automatically. */
   mainSiteLive: true,
   tagline: 'Tools Gratis untuk Seller Online Indonesia',
   description:
     'Tools gratis untuk seller online Indonesia: kalkulator keuntungan, generator label paket, dan template spreadsheet. Tanpa daftar akun, diproses di browser Anda.',
   lang: 'id',
+  /** Sitemap lastmod (YYYY-MM-DD) for the homepage; update when its content changes. */
+  homeUpdated: '2026-11-03',
 };
 
 /** @type {{ businessName: string | null, email: string | null, whatsapp: string | null, instagram: string | null }} */
@@ -40,48 +42,83 @@ export const LEGAL_REVIEW = {
 };
 
 /**
+ * Published guides on kukirim.com that pair with a tool (linked from tool pages).
+ * Add a guide here only after it is live on kukirim.com.
+ */
+const GUIDES = {
+  hargaJual: {
+    title: 'Cara Menentukan Harga Jual Online Shop agar Untung',
+    url: 'https://kukirim.com/panduan/cara-menentukan-harga-jual/',
+  },
+  pembukuan: {
+    title: 'Cara Membuat Pembukuan Online Shop Sederhana',
+    url: 'https://kukirim.com/panduan/cara-membuat-pembukuan-online-shop/',
+  },
+  label: {
+    title: 'Cara Membuat dan Mencetak Label Pengiriman Paket',
+    url: 'https://kukirim.com/panduan/cara-membuat-label-pengiriman-paket/',
+  },
+  pesanan: {
+    title: 'Cara Mengelola Pesanan Online Shop dari Banyak Channel',
+    url: 'https://kukirim.com/panduan/cara-mengelola-pesanan-online-shop/',
+  },
+};
+
+/**
  * Site pages in navigation order. `ready` is flipped to true when the page
  * exists, so links to unbuilt pages are never rendered. Pages with `nav` are
- * shown in the header and on the homepage, grouped by `kind`.
- * @type {{ path: string, label: string, ready: boolean, nav?: boolean, kind?: 'tool' | 'template', summary?: string }[]}
+ * shown in the header and on the homepage, grouped by `kind`. `updated`
+ * (YYYY-MM-DD) is the sitemap lastmod: the date the page's visible content
+ * last changed. `guides` are companion guides on kukirim.com shown as
+ * "Panduan terkait"; list only published guides.
+ * @typedef {{ title: string, url: string }} Guide
+ * @type {{ path: string, label: string, ready: boolean, updated: string, nav?: boolean, kind?: 'tool' | 'template', summary?: string, guides?: Guide[] }[]}
  */
 export const PAGES = [
   {
     path: '/kalkulator-keuntungan/',
     label: 'Kalkulator Keuntungan',
     ready: true,
+    updated: '2026-11-03',
     nav: true,
     kind: 'tool',
-    summary: 'Hitung laba bersih, margin, dan harga impas setelah diskon, biaya marketplace, ongkir, dan kemasan.',
+    summary: 'Hitung laba bersih, margin, harga impas, dan harga jual untuk target margin setelah diskon dan biaya marketplace.',
+    guides: [GUIDES.hargaJual, GUIDES.pembukuan],
   },
   {
     path: '/generator-label-paket/',
     label: 'Generator Label Paket',
     ready: true,
+    updated: '2026-11-03',
     nav: true,
     kind: 'tool',
     summary: 'Buat label alamat dari isian manual atau file CSV, lalu cetak di kertas thermal 100 × 150 mm atau A4.',
+    guides: [GUIDES.label, GUIDES.pesanan],
   },
   {
     path: '/template-pembukuan-online-shop/',
     label: 'Template Pembukuan',
     ready: true,
+    updated: '2026-11-03',
     nav: true,
     kind: 'template',
     summary: 'Catat pemasukan dan pengeluaran toko, lalu lihat laba per bulan dan per kategori secara otomatis.',
+    guides: [GUIDES.pembukuan, GUIDES.hargaJual],
   },
   {
     path: '/template-manajemen-order/',
     label: 'Template Manajemen Order',
     ready: true,
+    updated: '2026-11-03',
     nav: true,
     kind: 'template',
-    summary: 'Kumpulkan pesanan dari semua channel dan pantau mana yang sudah dibayar dan perlu dikirim.',
+    summary: 'Rekap pesanan dari semua channel dan pantau mana yang sudah dibayar dan perlu dikirim.',
+    guides: [GUIDES.pesanan, GUIDES.label],
   },
-  { path: '/tentang/', label: 'Tentang', ready: true },
-  { path: '/kontak/', label: 'Kontak', ready: true },
-  { path: '/privasi/', label: 'Kebijakan Privasi', ready: true },
-  { path: '/syarat-ketentuan/', label: 'Syarat & Ketentuan', ready: true },
+  { path: '/tentang/', label: 'Tentang', ready: true, updated: '2026-11-03' },
+  { path: '/kontak/', label: 'Kontak', ready: true, updated: '2026-11-03' },
+  { path: '/privasi/', label: 'Kebijakan Privasi', ready: true, updated: '2026-10-30' },
+  { path: '/syarat-ketentuan/', label: 'Syarat & Ketentuan', ready: true, updated: '2026-10-26' },
 ];
 
 /**

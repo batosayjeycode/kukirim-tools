@@ -3,7 +3,8 @@
  * Output is written with textContent only; nothing is stored or sent anywhere.
  */
 import { calculateProfit, parseNumber } from '../lib/profit.js';
-import { formatIDR, formatPercent, formatBreakEven } from '../lib/format.js';
+import { formatIDR, formatPercent, formatBreakEven, formatTargetPrice } from '../lib/format.js';
+import { SHARE_FIELDS, decodeShareState, encodeShareState } from '../lib/share.js';
 
 /** Worked example shown on the page (fictitious numbers). */
 const EXAMPLE = {
@@ -84,6 +85,7 @@ function init(form) {
       packaging: value('packaging'),
       other: value('other'),
       qty: value('qty'),
+      targetMarginPct: value('targetMarginPct'),
     });
 
     if (!outcome.ok) {
@@ -108,6 +110,11 @@ function init(form) {
     out('qty').textContent = String(r.qty);
     out('margin').textContent = formatPercent(r.margin);
     out('breakEven').textContent = formatBreakEven(r.breakEven);
+    row('targetPrice').hidden = r.targetPrice === null;
+    if (r.targetPrice) {
+      out('targetMarginPct').textContent = formatPercent(r.targetPrice.marginPct);
+      out('targetPrice').textContent = formatTargetPrice(r.targetPrice);
+    }
 
     out('price').textContent = formatIDR(r.price);
     out('sellerDiscount').textContent = `−${formatIDR(r.sellerDiscount)}`;
@@ -136,16 +143,46 @@ function init(form) {
   // The reset event fires before fields are cleared.
   form.addEventListener('reset', () => setTimeout(update, 0));
 
-  exampleButton?.addEventListener('click', () => {
-    for (const [name, v] of Object.entries(EXAMPLE)) {
+  /** @param {Record<string, string>} values */
+  function fill(values) {
+    for (const [name, v] of Object.entries(values)) {
       for (const field of form.querySelectorAll(`[name="${name}"]`)) {
         if (field instanceof HTMLInputElement && field.type === 'radio') field.checked = field.value === v;
         else /** @type {HTMLInputElement | HTMLSelectElement} */ (field).value = v;
       }
     }
+  }
+
+  exampleButton?.addEventListener('click', () => {
+    fill(EXAMPLE);
     update();
     form.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
+
+  // Shareable link: values live in the URL fragment, which is never sent to the server.
+  const shareButton = document.getElementById('profit-share');
+  const shareStatus = /** @type {HTMLElement | null} */ (document.getElementById('profit-share-status'));
+  shareButton?.addEventListener('click', async () => {
+    const values = Object.fromEntries(Object.keys(SHARE_FIELDS).map((name) => [name, value(name)]));
+    const url = `${location.origin}${location.pathname}#${encodeShareState(values)}`;
+    history.replaceState(null, '', url);
+    if (!shareStatus) return;
+    try {
+      await navigator.clipboard.writeText(url);
+      shareStatus.textContent = 'Tautan disalin. Tempel di chat untuk membagikan perhitungan ini.';
+    } catch {
+      shareStatus.textContent = 'Tautan sudah ada di bilah alamat browser. Salin dari sana untuk membagikannya.';
+    }
+  });
+
+  // Once the user edits a shared calculation, drop the now-stale link from the address bar.
+  form.addEventListener('input', () => {
+    if (location.hash) history.replaceState(null, '', `${location.pathname}${location.search}`);
+    if (shareStatus) shareStatus.textContent = '';
+  });
+
+  const shared = decodeShareState(location.hash);
+  if (Object.keys(shared).length > 0) fill(shared);
 
   update();
 }

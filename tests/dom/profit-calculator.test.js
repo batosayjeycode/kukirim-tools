@@ -43,6 +43,26 @@ describe.skipIf(!builtPageExists(ROUTE))('profit calculator page', () => {
     expect(text($('#discountValue-error'))).toBe('Nilai maksimal 100.');
   });
 
+  it('hides the target-margin price until a target is entered', () => {
+    $('#profit-example').click();
+    expect($('[data-row="targetPrice"]').hidden).toBe(true);
+    type('#targetMarginPct', '20');
+    expect($('[data-row="targetPrice"]').hidden).toBe(false);
+    expect(text($('[data-out="targetMarginPct"]'))).toBe('20%');
+    expect(text($('[data-out="targetPrice"]'))).toBe('Rp 100.309');
+    type('#targetMarginPct', '95');
+    expect(text($('[data-out="targetPrice"]'))).toMatch(/^Target margin ini tidak bisa dicapai/);
+    type('#targetMarginPct', '');
+    expect($('[data-row="targetPrice"]').hidden).toBe(true);
+  });
+
+  it('rejects a target margin of 100% or more', () => {
+    type('#price', '100000');
+    type('#targetMarginPct', '100');
+    expect($('#profit-results').hidden).toBe(true);
+    expect(text($('#targetMarginPct-error'))).toBe('Target margin harus di bawah 100%.');
+  });
+
   it('explains when no break-even price exists', () => {
     type('#price', '100000');
     type('#feePct', '100');
@@ -68,5 +88,26 @@ describe.skipIf(!builtPageExists(ROUTE))('profit calculator page', () => {
     type('#price', '10000');
     submit('#profit-form');
     expect($('#profit-results').hidden).toBe(false);
+  });
+
+  it('restores a shared calculation from the URL fragment and keeps the canonical path', async () => {
+    history.replaceState(null, '', '/kalkulator-keuntungan/#price=100.000&cost=60.000&discountValue=10&discountType=percent&feePct=8&feeFixed=1.000&shipping=5.000&packaging=2.000&other=1.000&qty=2&evil=1');
+    await loadPage(ROUTE, () => import('../../src/scripts/profit-calculator.js'));
+    expect(text($('[data-out="profit"]'))).toBe('Rp 17.800');
+    expect($('#discountType').value).toBe('percent');
+    history.replaceState(null, '', '/kalkulator-keuntungan/');
+  });
+
+  it('builds a share link from the current values', async () => {
+    type('#price', '50.000');
+    type('#cost', '30.000');
+    $('#profit-share').click();
+    await tick();
+    expect(location.hash).toContain('price=50.000');
+    expect(location.hash).toContain('cost=30.000');
+    expect(text($('#profit-share-status'))).not.toBe('');
+    type('#cost', '31.000');
+    expect(location.hash).toBe('');
+    history.replaceState(null, '', '/kalkulator-keuntungan/');
   });
 });

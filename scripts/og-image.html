@@ -4,6 +4,10 @@
   Regenerate:
     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --disable-gpu \
       --hide-scrollbars --window-size=1200,630 --screenshot=public/images/og-default.png scripts/og-image.html
+  Per-tool images (public/images/og-*.png) use the same file with a fragment, e.g.
+    ... --screenshot=public/images/og-kalkulator-keuntungan.png \
+      "file://$PWD/scripts/og-image.html#h=Kalkulator%20Keuntungan&c=Laba%20bersih|Margin|Harga%20impas"
+  scripts/build-og-images.sh regenerates all of them. This file is a local generator; it is not deployed.
 -->
 <html lang="id">
   <head>
@@ -77,5 +81,16 @@
       </ul>
       <p class="domain">tools.kukirim.com</p>
     </div>
+    <script>
+      // Optional overrides from the fragment: h = heading, c = chips separated by "|".
+      const params = new URLSearchParams(location.hash.slice(1));
+      if (params.get('h')) document.querySelector('h1').textContent = params.get('h');
+      if (params.get('c')) {
+        const list = document.querySelector('ul');
+        list.replaceChildren(
+          ...params.get('c').split('|').map((chip) => Object.assign(document.createElement('li'), { textContent: chip })),
+        );
+      }
+    </script>
   </body>
 </html>

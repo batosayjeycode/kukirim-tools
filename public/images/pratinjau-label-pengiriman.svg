@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="470" viewBox="0 0 720 470" font-family="Arial, Helvetica, sans-serif" role="img">
+<rect width="720" height="470" rx="8" fill="#f2f5f3"/>
+<rect x="40" y="40" width="260" height="390" rx="6" fill="#ffffff" stroke="#1b2420" stroke-width="1.5"/>
+<text x="54" y="64" font-size="11" font-weight="bold" fill="#55615b" text-anchor="start">PENERIMA</text>
+<text x="54" y="88" font-size="17" font-weight="bold" fill="#1b2420" text-anchor="start">Contoh Penerima Satu</text>
+<text x="54" y="108" font-size="13" font-weight="normal" fill="#1b2420" text-anchor="start">081200000001</text>
+<text x="54" y="127" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Jl. Contoh Raya No. 12, RT 01/RW 02</text>
+<text x="54" y="146" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Kel. Sukasari, Kec. Coblong</text>
+<text x="54" y="165" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Kota Bandung, Jawa Barat 40135</text>
+<text x="54" y="184" font-size="12" font-weight="normal" fill="#55615b" text-anchor="start">Catatan: Titip ke satpam</text>
+<line x1="54" y1="198.0" x2="290.0" y2="198.0" stroke="#1b2420" stroke-dasharray="4.0 3.0"/>
+<text x="54" y="216" font-size="11" font-weight="bold" fill="#55615b" text-anchor="start">PENGIRIM</text>
+<text x="54" y="236" font-size="13" font-weight="bold" fill="#1b2420" text-anchor="start">Toko Contoh</text>
+<text x="54" y="255" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">081200009999</text>
+<text x="170.0" y="456" font-size="13" font-weight="bold" fill="#0b6e4f" text-anchor="middle">Thermal 100 × 150 mm (1 label per lembar)</text>
+<rect x="400" y="40" width="278" height="393" fill="#ffffff" stroke="#1b2420" stroke-width="1.5"/>
+<rect x="412.0" y="52.0" width="124.0" height="87.8" fill="none" stroke="#9aa59f" stroke-dasharray="3 3"/>
+<text x="418.0" y="57.8" font-size="4.2" font-weight="bold" fill="#55615b" text-anchor="start">PENERIMA</text>
+<text x="418.0" y="67.0" font-size="6.5" font-weight="bold" fill="#1b2420" text-anchor="start">Contoh Penerima Satu</text>
+<text x="418.0" y="74.6" font-size="4.9" font-weight="normal" fill="#1b2420" text-anchor="start">081200000001</text>
+<text x="418.0" y="81.8" font-size="4.6" font-weight="normal" fill="#1b2420" text-anchor="start">Jl. Contoh Raya No. 12, RT 01/RW 02</text>
+<text x="418.0" y="89.0" font-size="4.6" font-weight="normal" fill="#1b2420" text-anchor="start">Kel. Sukasari, Kec. Coblong</text>
+<text x="418.0" y="96.2" font-size="4.6" font-weight="normal" fill="#1b2420" text-anchor="start">Kota Bandung, Jawa Barat 40135</text>
+<text x="418.0" y="103.4" font-size="4.6" font-weight="normal" fill="#55615b" text-anchor="start">Catatan: Titip ke satpam</text>
+<line x1="418.0" y1="108.8" x2="507.7" y2="108.8" stroke="#1b2420" stroke-dasharray="1.5 1.1"/>
+<text x="418.0" y="115.6" font-size="4.2" font-weight="bold" fill="#55615b" text-anchor="start">PENGIRIM</text>
+<text x="418.0" y="123.2" font-size="4.9" font-weight="bold" fill="#1b2420" text-anchor="start">Toko Contoh</text>
+<text x="418.0" y="130.4" font-size="4.6" font-weight="normal" fill="#1b2420" text-anchor="start">081200009999</text>
+<rect x="542.0" y="52.0" width="124.0" height="87.8" fill="none" stroke="#9aa59f" stroke-dasharray="3 3"/>
+<text x="548.0" y="57.8" font-size="4.2" font-weight="bold" fill="#55615b" text-anchor="start">PENERIMA</text>
+<text x="548.0" y="67.0" font-size="6.5" font-weight="bold" fill="#1b2420" text-anchor="start">Contoh Penerima Satu</text>
+<text x="548.0" y="74.6" font-size="4.9" font-weight="normal" fill="#1b2420" text-anchor="start">081200000001</text>
+<text x="548.0" y="81.8" font-size="4.6" font-weight="normal" fill="#1b2420" text-anchor="start">Jl. Contoh Raya No. 12, RT 01/RW 02</text>
+<text x="548.0" y="89.0" font-size="4.6" font-weight="normal" fill="#1b2420" text-anchor="start">Kel. Sukasari, Kec. Coblong</text>
+<text x="548.0" y="96.2" font-size="4.6" font-weight="normal" fill="#1b2420" text-anchor="start">Kota Bandung, Jawa Barat 40135</text>
+<text x="548.0" y="103.4" font-size="4.6" font-weight="normal" fill="#55615b" text-anchor="start">Catatan: Titip ke satpam</text>
+<line x1="548.0" y1="108.8" x2="637.7" y2="108.8" stroke="#1b2420" stroke-dasharray="1.5 1.1"/>
+<text x="548.0" y="115.6" font-size="4.2" font-weight="bold" fill="#55615b" text-anchor="start">PENGIRIM</text>
+<text x="548.0" y="123.2" font-size="4.9" font-weight="bold" fill="#1b2420" text-anchor="start">Toko Contoh</text>
+<text x="548.0" y="130.4" font-size="4.6" font-weight="normal" fill="#1b2420" text-anchor="start">081200009999</text>
+<rect x="412.0" y="145.8" width="124.0" height="87.8" fill="none" stroke="#9aa59f" stroke-dasharray="3 3"/>
+<text x="418.0" y="151.6" font-size="4.2" font-weight="bold" fill="#55615b" text-anchor="start">PENERIMA</text>
+<text x="418.0" y="160.8" font-size="6.5" font-weight="bold" fill="#1b2420" text-anchor="start">Contoh Penerima Satu</text>
+<text x="418.0" y="168.4" font-size="4.9" font-weight="normal" fill="#1b2420" text-anchor="start">081200000001</text>
+<text x="418.0" y="175.6" font-size="4.6" font-weight="normal" fill="#1b2420" text-anchor="start">Jl. Contoh Raya No. 12, RT 01/RW 02</text>
+<text x="418.0" y="182.8" font-size="4.6" font-weight="normal" fill="#1b2420" text-anchor="start">Kel. Sukasari, Kec. Coblong</text>
+<text x="418.0" y="190.0" font-size="4.6" font-weight="normal" fill="#1b2420" text-anchor="start">Kota Bandung, Jawa Barat 40135</text>
+<text x="418.0" y="197.2" font-size="4.6" font-weight="normal" fill="#55615b" text-anchor="start">Catatan: Titip ke satpam</text>
+<line x1="418.0" y1="202.6" x2="507.7" y2="202.6" stroke="#1b2420" stroke-dasharray="1.5 1.1"/>
+<text x="418.0" y="209.4" font-size="4.2" font-weight="bold" fill="#55615b" text-anchor="start">PENGIRIM</text>
+<text x="418.0" y="217.0" font-size="4.9" font-weight="bold" fill="#1b2420" text-anchor="start">Toko Contoh</text>
+<text x="418.0" y="224.2" font-size="4.6" font-weight="normal" fill="#1b2420" text-anchor="start">081200009999</text>
+<rect x="542.0" y="145.8" width="124.0" height="87.8" fill="none" stroke="#9aa59f" stroke-dasharray="3 3"/>
+<text x="548.0" y="151.6" font-size="4.2" font-weight="bold" fill="#55615b" text-anchor="start">PENERIMA</text>
+<text x="548.0" y="160.8" font-size="6.5" font-weight="bold" fill="#1b2420" text-anchor="start">Contoh Penerima Satu</text>
+<text x="548.0" y="168.4" font-size="4.9" font-weight="normal" fill="#1b2420" text-anchor="start">081200000001</text>
+<text x="548.0" y="175.6" font-size="4.6" font-weight="normal" fill="#1b2420" text-anchor="start">Jl. Contoh Raya No. 12, RT 01/RW 02</text>
+<text x="548.0" y="182.8" font-size="4.6" font-weight="normal" fill="#1b2420" text-anchor="start">Kel. Sukasari, Kec. Coblong</text>
+<text x="548.0" y="190.0" font-size="4.6" font-weight="normal" fill="#1b2420" text-anchor="start">Kota Bandung, Jawa Barat 40135</text>
+<text x="548.0" y="197.2" font-size="4.6" font-weight="normal" fill="#55615b" text-anchor="start">Catatan: Titip ke satpam</text>
+<line x1="548.0" y1="202.6" x2="637.7" y2="202.6" stroke="#1b2420" stroke-dasharray="1.5 1.1"/>
+<text x="548.0" y="209.4" font-size="4.2" font-weight="bold" fill="#55615b" text-anchor="start">PENGIRIM</text>
+<text x="548.0" y="217.0" font-size="4.9" font-weight="bold" fill="#1b2420" text-anchor="start">Toko Contoh</text>
+<text x="548.0" y="224.2" font-size="4.6" font-weight="normal" fill="#1b2420" text-anchor="start">081200009999</text>
+<rect x="412.0" y="239.5" width="124.0" height="87.8" fill="none" stroke="#9aa59f" stroke-dasharray="3 3"/>
+<text x="418.0" y="245.3" font-size="4.2" font-weight="bold" fill="#55615b" text-anchor="start">PENERIMA</text>
+<text x="418.0" y="254.5" font-size="6.5" font-weight="bold" fill="#1b2420" text-anchor="start">Contoh Penerima Satu</text>
+<text x="418.0" y="262.1" font-size="4.9" font-weight="normal" fill="#1b2420" text-anchor="start">081200000001</text>
+<text x="418.0" y="269.3" font-size="4.6" font-weight="normal" fill="#1b2420" text-anchor="start">Jl. Contoh Raya No. 12, RT 01/RW 02</text>
+<text x="418.0" y="276.5" font-size="4.6" font-weight="normal" fill="#1b2420" text-anchor="start">Kel. Sukasari, Kec. Coblong</text>
+<text x="418.0" y="283.7" font-size="4.6" font-weight="normal" fill="#1b2420" text-anchor="start">Kota Bandung, Jawa Barat 40135</text>
+<text x="418.0" y="290.9" font-size="4.6" font-weight="normal" fill="#55615b" text-anchor="start">Catatan: Titip ke satpam</text>
+<line x1="418.0" y1="296.3" x2="507.7" y2="296.3" stroke="#1b2420" stroke-dasharray="1.5 1.1"/>
+<text x="418.0" y="303.1" font-size="4.2" font-weight="bold" fill="#55615b" text-anchor="start">PENGIRIM</text>
+<text x="418.0" y="310.7" font-size="4.9" font-weight="bold" fill="#1b2420" text-anchor="start">Toko Contoh</text>
+<text x="418.0" y="317.9" font-size="4.6" font-weight="normal" fill="#1b2420" text-anchor="start">081200009999</text>
+<rect x="542.0" y="239.5" width="124.0" height="87.8" fill="none" stroke="#9aa59f" stroke-dasharray="3 3"/>
+<text x="548.0" y="245.3" font-size="4.2" font-weight="bold" fill="#55615b" text-anchor="start">PENERIMA</text>
+<text x="548.0" y="254.5" font-size="6.5" font-weight="bold" fill="#1b2420" text-anchor="start">Contoh Penerima Satu</text>
+<text x="548.0" y="262.1" font-size="4.9" font-weight="normal" fill="#1b2420" text-anchor="start">081200000001</text>
+<text x="548.0" y="269.3" font-size="4.6" font-weight="normal" fill="#1b2420" text-anchor="start">Jl. Contoh Raya No. 12, RT 01/RW 02</text>
+<text x="548.0" y="276.5" font-size="4.6" font-weight="normal" fill="#1b2420" text-anchor="start">Kel. Sukasari, Kec. Coblong</text>
+<text x="548.0" y="283.7" font-size="4.6" font-weight="normal" fill="#1b2420" text-anchor="start">Kota Bandung, Jawa Barat 40135</text>
+<text x="548.0" y="290.9" font-size="4.6" font-weight="normal" fill="#55615b" text-anchor="start">Catatan: Titip ke satpam</text>
+<line x1="548.0" y1="296.3" x2="637.7" y2="296.3" stroke="#1b2420" stroke-dasharray="1.5 1.1"/>
+<text x="548.0" y="303.1" font-size="4.2" font-weight="bold" fill="#55615b" text-anchor="start">PENGIRIM</text>
+<text x="548.0" y="310.7" font-size="4.9" font-weight="bold" fill="#1b2420" text-anchor="start">Toko Contoh</text>
+<text x="548.0" y="317.9" font-size="4.6" font-weight="normal" fill="#1b2420" text-anchor="start">081200009999</text>
+<rect x="412.0" y="333.2" width="124.0" height="87.8" fill="none" stroke="#9aa59f" stroke-dasharray="3 3"/>
+<text x="418.0" y="339.0" font-size="4.2" font-weight="bold" fill="#55615b" text-anchor="start">PENERIMA</text>
+<text x="418.0" y="348.2" font-size="6.5" font-weight="bold" fill="#1b2420" text-anchor="start">Contoh Penerima Satu</text>
+<text x="418.0" y="355.8" font-size="4.9" font-weight="normal" fill="#1b2420" text-anchor="start">081200000001</text>
+<text x="418.0" y="363.0" font-size="4.6" font-weight="normal" fill="#1b2420" text-anchor="start">Jl. Contoh Raya No. 12, RT 01/RW 02</text>
+<text x="418.0" y="370.2" font-size="4.6" font-weight="normal" fill="#1b2420" text-anchor="start">Kel. Sukasari, Kec. Coblong</text>
+<text x="418.0" y="377.4" font-size="4.6" font-weight="normal" fill="#1b2420" text-anchor="start">Kota Bandung, Jawa Barat 40135</text>
+<text x="418.0" y="384.6" font-size="4.6" font-weight="normal" fill="#55615b" text-anchor="start">Catatan: Titip ke satpam</text>
+<line x1="418.0" y1="390.0" x2="507.7" y2="390.0" stroke="#1b2420" stroke-dasharray="1.5 1.1"/>
+<text x="418.0" y="396.8" font-size="4.2" font-weight="bold" fill="#55615b" text-anchor="start">PENGIRIM</text>
+<text x="418.0" y="404.4" font-size="4.9" font-weight="bold" fill="#1b2420" text-anchor="start">Toko Contoh</text>
+<text x="418.0" y="411.6" font-size="4.6" font-weight="normal" fill="#1b2420" text-anchor="start">081200009999</text>
+<rect x="542.0" y="333.2" width="124.0" height="87.8" fill="none" stroke="#9aa59f" stroke-dasharray="3 3"/>
+<text x="548.0" y="339.0" font-size="4.2" font-weight="bold" fill="#55615b" text-anchor="start">PENERIMA</text>
+<text x="548.0" y="348.2" font-size="6.5" font-weight="bold" fill="#1b2420" text-anchor="start">Contoh Penerima Satu</text>
+<text x="548.0" y="355.8" font-size="4.9" font-weight="normal" fill="#1b2420" text-anchor="start">081200000001</text>
+<text x="548.0" y="363.0" font-size="4.6" font-weight="normal" fill="#1b2420" text-anchor="start">Jl. Contoh Raya No. 12, RT 01/RW 02</text>
+<text x="548.0" y="370.2" font-size="4.6" font-weight="normal" fill="#1b2420" text-anchor="start">Kel. Sukasari, Kec. Coblong</text>
+<text x="548.0" y="377.4" font-size="4.6" font-weight="normal" fill="#1b2420" text-anchor="start">Kota Bandung, Jawa Barat 40135</text>
+<text x="548.0" y="384.6" font-size="4.6" font-weight="normal" fill="#55615b" text-anchor="start">Catatan: Titip ke satpam</text>
+<line x1="548.0" y1="390.0" x2="637.7" y2="390.0" stroke="#1b2420" stroke-dasharray="1.5 1.1"/>
+<text x="548.0" y="396.8" font-size="4.2" font-weight="bold" fill="#55615b" text-anchor="start">PENGIRIM</text>
+<text x="548.0" y="404.4" font-size="4.9" font-weight="bold" fill="#1b2420" text-anchor="start">Toko Contoh</text>
+<text x="548.0" y="411.6" font-size="4.6" font-weight="normal" fill="#1b2420" text-anchor="start">081200009999</text>
+<text x="539.0" y="456" font-size="13" font-weight="bold" fill="#0b6e4f" text-anchor="middle">A4 isi 8 label (2 × 4), potong di garis</text>
+</svg>

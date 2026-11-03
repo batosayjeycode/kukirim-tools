@@ -36,3 +36,13 @@ export function formatPercent(value) {
 export function formatBreakEven(breakEven) {
   return breakEven.ok ? formatIDR(breakEven.price, 'ceil') : NO_BREAK_EVEN_TEXT;
 }
+
+export const NO_TARGET_PRICE_TEXT = 'Target margin ini tidak bisa dicapai dengan persentase biaya dan diskon saat ini';
+
+/**
+ * Selling price for a target margin, rounded up to whole rupiah, or an explanation when none exists.
+ * @param {import('./profit.js').TargetPrice} targetPrice
+ */
+export function formatTargetPrice(targetPrice) {
+  return targetPrice.ok ? formatIDR(targetPrice.price, 'ceil') : NO_TARGET_PRICE_TEXT;
+}

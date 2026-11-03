@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 import { SITE, CONTACT, readyPages } from '../config.js';
 
 const tools = readyPages().filter((p) => p.nav);
@@ -7,9 +8,11 @@ const operator = CONTACT.businessName?.trim();
 ---
 
 <BaseLayout
-  title="Tentang Kukirim Tools"
+  title="Tentang Layanan & Prinsip Privasi"
   description="Kukirim Tools menyediakan tools dan template gratis untuk seller online Indonesia. Tanpa akun, data diproses di browser Anda."
 >
+  <Breadcrumb current="Tentang" />
+
   <article class="content content-page">
     <h1>Tentang {SITE.name}</h1>
     <p class="lead">

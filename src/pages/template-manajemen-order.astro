@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
+import RelatedGuides from '../components/RelatedGuides.astro';
 import { readyPages } from '../config.js';
 import { getDownload } from '../lib/downloads.js';
 
@@ -22,14 +23,15 @@ const columns = [
 ---
 
 <BaseLayout
-  title="Template Manajemen Order Online Shop Gratis"
-  description="Template gratis untuk mencatat pesanan dari semua channel, memantau status pembayaran dan pengiriman, dan melihat pesanan yang perlu dikirim. Format .xlsx."
+  title="Template Rekap Orderan & Manajemen Order Gratis"
+  description="Template rekap orderan gratis: catat pesanan dari semua channel, pantau status pembayaran dan pengiriman, dan lihat pesanan yang perlu dikirim. Format .xlsx."
+  image={{ src: '/images/og-template-manajemen-order.png', alt: 'Template rekap orderan online shop: semua channel, status bayar, dan status kirim' }}
 >
   <Breadcrumb current="Template Manajemen Order" />
 
   <h1>Template Manajemen Order Online Shop</h1>
   <p class="lead">
-    Kumpulkan pesanan dari marketplace, chat, dan media sosial di satu spreadsheet. Lihat sekilas mana yang sudah dibayar,
+    Rekap orderan dari marketplace, chat, dan media sosial di satu spreadsheet Excel atau Google Sheets. Lihat sekilas mana yang sudah dibayar,
     mana yang perlu dikirim, dan berapa penjualan per channel.
   </p>
 
@@ -62,6 +64,20 @@ const columns = [
       Butuh label alamat untuk pesanan yang akan dikirim? Gunakan{' '}
       <a href="/generator-label-paket/">generator label paket</a>.
     </p>
+
+    <figure class="preview">
+      <div class="preview-scroll">
+        <img
+          src="/images/pratinjau-template-manajemen-order.svg"
+          width="732"
+          height="328"
+          loading="lazy"
+          decoding="async"
+          alt="Pratinjau sheet Order pada template rekap orderan: enam contoh pesanan dari Shopee, WhatsApp, Tokopedia, Instagram, dan TikTok Shop, dengan dua baris kuning untuk pesanan yang sudah dibayar tetapi belum dikirim."
+        />
+      </div>
+      <figcaption>Sheet Order dengan contoh data fiktif. Baris kuning menandai pesanan yang perlu dikirim.</figcaption>
+    </figure>
 
     <h2>Kolom di sheet Order</h2>
     <div class="table-scroll">
@@ -116,6 +132,8 @@ const columns = [
       <summary>Berapa banyak pesanan yang bisa dicatat?</summary>
       <p>Rumus Total dan Ringkasan mencakup sampai 1.000 pesanan. Untuk periode berikutnya, simpan salinan file baru.</p>
     </details>
+
+    <RelatedGuides path={path} />
 
     {
       related.length > 0 && (

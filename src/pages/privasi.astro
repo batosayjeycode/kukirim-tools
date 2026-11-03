@@ -2,6 +2,7 @@
 // INTERNAL: plain-language text, not legal advice. Reviewed by the owner 2026-10-26 (LEGAL_REVIEW in
 // src/config.js). Set the flag back to false and re-review whenever data handling changes. Do not render review notes.
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 import { SITE, CONTACT } from '../config.js';
 
 const updated = '30 Oktober 2026';
@@ -13,6 +14,8 @@ const email = CONTACT.email?.trim();
   title="Kebijakan Privasi"
   description="Bagaimana Kukirim Tools menangani data: perhitungan dan file CSV diproses di browser Anda, tanpa akun dan tanpa unggah ke server."
 >
+  <Breadcrumb current="Kebijakan Privasi" />
+
   <article class="content content-page">
     <h1>Kebijakan Privasi</h1>
     <p class="note">Terakhir diperbarui: {updated}</p>

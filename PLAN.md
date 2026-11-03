@@ -59,6 +59,16 @@ Break-even listed price (profit = 0). Let `C = cost + feeFixed + orderCosts`, `f
 | fixed `a` | `C / (1 − f) + a` | `(C + a) / (1 − f)` |
 | percent `p` | `C / ((1 − f) × (1 − p))` | `C / (1 − p − f)` |
 
+Target-margin listed price (added 2026-11-03, SEO-P2-01; optional input `targetMarginPct`, 0 to < 100, empty = not shown). The listed price at which `margin` equals the target, with the same discount and costs; `m = targetMarginPct/100`, and `m = 0` gives the break-even table above:
+
+| Seller discount | `feeBase = revenue` | `feeBase = listed` |
+|---|---|---|
+| none | `C / (1 − f − m)` | `C / (1 − f − m)` |
+| fixed `a` | `C / (1 − f − m) + a` | `(C + a(1 − m)) / (1 − f − m)` |
+| percent `p` | `C / ((1 − f − m) × (1 − p))` | `C / ((1 − p)(1 − m) − f)` |
+
+If that denominator is ≤ 0, return `{ ok: false, reason: 'no-finite-target-price' }`; the UI says the target cannot be reached.
+
 Edge cases:
 - If the denominator is ≤ 0 (e.g. `f ≥ 1`, `p ≥ 1`, or `p + f ≥ 1` for `listed`), return an explicit `{ ok: false, reason: 'no-finite-break-even' }` result; the UI shows "Tidak ada harga impas yang memungkinkan". Never return `Infinity`, `NaN`, or a negative price.
 - Platform-funded discounts do not affect break-even.

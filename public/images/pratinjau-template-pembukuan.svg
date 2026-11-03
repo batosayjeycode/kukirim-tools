@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="770" height="328" viewBox="0 0 770 328" font-family="Arial, Helvetica, sans-serif" role="img">
+<rect width="770" height="328" rx="8" fill="#ffffff" stroke="#d5dcd8"/>
+<rect width="770" height="44" rx="8" fill="#f2f5f3"/>
+<rect y="36" width="770" height="8" fill="#f2f5f3"/>
+<circle cx="18" cy="22" r="5" fill="#d5dcd8"/><circle cx="34" cy="22" r="5" fill="#d5dcd8"/><circle cx="50" cy="22" r="5" fill="#d5dcd8"/>
+<text x="70" y="27" font-size="14" font-weight="bold" fill="#1b2420" text-anchor="start">template-pembukuan-online-shop.xlsx — Transaksi</text>
+<rect x="1" y="44" width="768" height="30" fill="#0b6e4f"/>
+<text x="9" y="64" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="start">Tanggal</text>
+<text x="101" y="64" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="start">Jenis</text>
+<text x="205" y="64" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="start">Kategori</text>
+<text x="339" y="64" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="start">Keterangan</text>
+<text x="567" y="64" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="start">Channel</text>
+<text x="761" y="64" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="end">Jumlah (Rp)</text>
+<line x1="1" y1="104" x2="769" y2="104" stroke="#e3e8e5"/>
+<text x="9" y="94" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">02/09/2026</text>
+<text x="101" y="94" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Pengeluaran</text>
+<text x="205" y="94" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Pembelian stok</text>
+<text x="339" y="94" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Beli 50 pcs kaos polos</text>
+<text x="567" y="94" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Lainnya</text>
+<text x="761" y="94" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="end">Rp1.750.000</text>
+<line x1="1" y1="134" x2="769" y2="134" stroke="#e3e8e5"/>
+<text x="9" y="124" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">03/09/2026</text>
+<text x="101" y="124" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Pengeluaran</text>
+<text x="205" y="124" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Kemasan</text>
+<text x="339" y="124" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Polymailer 100 pcs</text>
+<text x="567" y="124" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Lainnya</text>
+<text x="761" y="124" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="end">Rp85.000</text>
+<line x1="1" y1="164" x2="769" y2="164" stroke="#e3e8e5"/>
+<text x="9" y="154" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">05/09/2026</text>
+<text x="101" y="154" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Pemasukan</text>
+<text x="205" y="154" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Penjualan</text>
+<text x="339" y="154" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Pencairan penjualan minggu 1</text>
+<text x="567" y="154" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Shopee</text>
+<text x="761" y="154" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="end">Rp1.240.000</text>
+<line x1="1" y1="194" x2="769" y2="194" stroke="#e3e8e5"/>
+<text x="9" y="184" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">06/09/2026</text>
+<text x="101" y="184" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Pemasukan</text>
+<text x="205" y="184" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Penjualan</text>
+<text x="339" y="184" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">5 pesanan via chat</text>
+<text x="567" y="184" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">WhatsApp</text>
+<text x="761" y="184" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="end">Rp475.000</text>
+<line x1="1" y1="224" x2="769" y2="224" stroke="#e3e8e5"/>
+<text x="9" y="214" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">12/09/2026</text>
+<text x="101" y="214" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Pengeluaran</text>
+<text x="205" y="214" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Iklan &amp; promosi</text>
+<text x="339" y="214" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Iklan toko</text>
+<text x="567" y="214" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Shopee</text>
+<text x="761" y="214" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="end">Rp150.000</text>
+<line x1="1" y1="254" x2="769" y2="254" stroke="#e3e8e5"/>
+<text x="9" y="244" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">15/09/2026</text>
+<text x="101" y="244" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Pemasukan</text>
+<text x="205" y="244" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Penjualan</text>
+<text x="339" y="244" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Pencairan penjualan minggu 2</text>
+<text x="567" y="244" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="start">Tokopedia</text>
+<text x="761" y="244" font-size="12" font-weight="normal" fill="#1b2420" text-anchor="end">Rp980.000</text>
+<line x1="93" y1="74" x2="93" y2="254" stroke="#e3e8e5"/>
+<line x1="197" y1="74" x2="197" y2="254" stroke="#e3e8e5"/>
+<line x1="331" y1="74" x2="331" y2="254" stroke="#e3e8e5"/>
+<line x1="559" y1="74" x2="559" y2="254" stroke="#e3e8e5"/>
+<line x1="657" y1="74" x2="657" y2="254" stroke="#e3e8e5"/>
+<text x="12" y="276" font-size="12" font-weight="normal" fill="#55615b" text-anchor="start">Contoh data fiktif. Satu baris per pemasukan atau pengeluaran.</text>
+<rect x="8" y="296" width="76" height="24" rx="4" fill="#f2f5f3" stroke="#d5dcd8"/>
+<text x="16" y="313" font-size="12" font-weight="normal" fill="#55615b" text-anchor="start">Petunjuk</text>
+<rect x="90.0" y="296" width="84" height="24" rx="4" fill="#ffffff" stroke="#0b6e4f"/>
+<text x="98.0" y="313" font-size="12" font-weight="bold" fill="#0b6e4f" text-anchor="start">Transaksi</text>
+<rect x="179.5" y="296" width="84" height="24" rx="4" fill="#f2f5f3" stroke="#d5dcd8"/>
+<text x="187.5" y="313" font-size="12" font-weight="normal" fill="#55615b" text-anchor="start">Ringkasan</text>
+<rect x="269.0" y="296" width="76" height="24" rx="4" fill="#f2f5f3" stroke="#d5dcd8"/>
+<text x="277.0" y="313" font-size="12" font-weight="normal" fill="#55615b" text-anchor="start">Kategori</text>
+</svg>

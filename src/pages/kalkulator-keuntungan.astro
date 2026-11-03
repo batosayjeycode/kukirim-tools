@@ -1,23 +1,44 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
+import RelatedGuides from '../components/RelatedGuides.astro';
 import Field from '../components/Field.astro';
 import { readyPages } from '../config.js';
+import { webApplication } from '../lib/schema.js';
 
 const path = '/kalkulator-keuntungan/';
+const description =
+  'Hitung laba bersih, margin, harga impas, dan harga jual untuk target margin setelah diskon, biaya marketplace, ongkir, dan kemasan. Gratis, dihitung di browser.';
+const jsonLd = [
+  webApplication({
+    name: 'Kalkulator Keuntungan Jualan Online',
+    path,
+    description,
+    featureList: [
+      'Laba bersih per unit dan per pesanan',
+      'Margin bersih',
+      'Harga jual impas',
+      'Harga jual untuk target margin',
+      'Diskon penjual atau platform',
+      'Biaya marketplace persentase dan tetap',
+    ],
+  }),
+];
 const related = readyPages().filter((p) => p.nav && p.path !== path);
 ---
 
 <BaseLayout
   title="Kalkulator Keuntungan Jualan Online"
-  description="Hitung laba bersih, margin, dan harga impas produk setelah diskon, biaya marketplace, ongkir, dan kemasan. Gratis, tanpa daftar, dihitung di browser Anda."
+  description={description}
+  jsonLd={jsonLd}
+  image={{ src: '/images/og-kalkulator-keuntungan.png', alt: 'Kalkulator keuntungan jualan online: laba bersih, margin, dan harga impas' }}
 >
   <Breadcrumb current="Kalkulator Keuntungan" />
 
   <h1>Kalkulator Keuntungan Jualan Online</h1>
   <p class="lead">
     Harga jual belum tentu sama dengan untung. Masukkan harga, HPP, diskon, dan biaya marketplace untuk melihat estimasi
-    laba bersih per unit, margin, dan harga jual minimal agar tidak rugi.
+    laba bersih per unit, margin, harga jual minimal agar tidak rugi, dan harga jual untuk target margin Anda.
   </p>
 
   <div class="tool">
@@ -69,6 +90,17 @@ const related = readyPages().filter((p) => p.nav && p.path !== path);
         <Field id="qty" label="Jumlah unit per pesanan" hint="Biaya per pesanan dibagi rata ke setiap unit." inputmode="numeric" value="1" />
       </fieldset>
 
+      <fieldset>
+        <legend>Target margin (opsional)</legend>
+        <Field
+          id="targetMarginPct"
+          label="Target margin bersih"
+          hint="Isi untuk melihat harga jual yang dibutuhkan agar laba bersih mencapai persentase ini dari pendapatan."
+          suffix="%"
+          placeholder="20"
+        />
+      </fieldset>
+
       <div class="actions">
         <button type="submit" class="button-primary">Hitung</button>
         <button type="reset" class="button-secondary">Reset</button>
@@ -99,7 +131,20 @@ const related = readyPages().filter((p) => p.nav && p.path !== path);
             <dt>Harga jual impas</dt>
             <dd data-out="breakEven"></dd>
           </div>
+          <div data-row="targetPrice" hidden>
+            <dt>Harga jual untuk target margin <span data-out="targetMarginPct"></span></dt>
+            <dd data-out="targetPrice"></dd>
+          </div>
         </dl>
+
+        <div class="share">
+          <button type="button" id="profit-share" class="button-secondary">Salin tautan perhitungan</button>
+          <p id="profit-share-status" class="field-hint" role="status" aria-live="polite"></p>
+          <p class="field-hint">
+            Angka disimpan di tautan (setelah tanda #) dan tidak dikirim ke server kami. Siapa pun yang menerima tautan bisa
+            melihat angkanya.
+          </p>
+        </div>
 
         <table class="breakdown">
           <caption>Rincian per unit</caption>
@@ -148,6 +193,12 @@ const related = readyPages().filter((p) => p.nav && p.path !== path);
         <strong>Harga impas</strong> adalah harga jual awal yang membuat laba bersih tepat nol, dengan diskon dan biaya yang
         sama. Jika persentase biaya dan diskon terlalu besar, tidak ada harga yang bisa menutup biaya.
       </li>
+      <li>
+        <strong>Harga jual untuk target margin</strong> adalah harga jual awal yang membuat margin tepat sebesar target,
+        dengan diskon dan biaya yang sama. Tanpa diskon, rumusnya: (HPP + biaya tetap + biaya per pesanan per unit) ÷ (1 −
+        % biaya marketplace − % target margin). Jika persentase biaya ditambah target margin mencapai 100% atau lebih,
+        target itu tidak bisa dicapai.
+      </li>
     </ol>
     <p>
       Yang <strong>tidak</strong> dihitung: pajak, biaya iklan, biaya penarikan dana, retur, dan biaya operasional bulanan
@@ -182,9 +233,19 @@ const related = readyPages().filter((p) => p.nav && p.path !== path);
     <details>
       <summary>Apakah tarif biaya marketplace di sini sudah pasti benar?</summary>
       <p>
-        Tidak. Kalkulator ini tidak mengambil tarif dari marketplace mana pun. Tarif bisa berbeda menurut kategori, program,
-        dan waktu, dan cara marketplace menghitungnya juga bisa berbeda. Cek tarif terbaru di pusat penjual Anda, lalu
-        masukkan angkanya di sini.
+        Tidak. Kalkulator ini tidak mengambil tarif dari marketplace mana pun, misalnya Shopee, Tokopedia, TikTok Shop, atau
+        Lazada. Tarif bisa berbeda menurut kategori, program, dan waktu, dan cara marketplace menghitungnya juga bisa
+        berbeda. Cek tarif terbaru di pusat penjual Anda, lalu masukkan angkanya di sini.
+      </p>
+    </details>
+    <details>
+      <summary>Apa bedanya margin dan markup?</summary>
+      <p>
+        Markup dihitung dari modal: (harga jual − HPP) ÷ HPP. Margin di kalkulator ini dihitung dari pendapatan: laba
+        bersih ÷ pendapatan. Contoh: produk dengan HPP Rp 50.000 yang dijual Rp 75.000 punya markup 50%, tetapi selisihnya
+        hanya sekitar 33% dari harga jual, dan margin bersihnya lebih kecil lagi setelah biaya marketplace, ongkir, dan
+        kemasan. Penjelasan lengkapnya ada di panduan{' '}
+        <a href="https://kukirim.com/panduan/cara-menentukan-harga-jual/">cara menentukan harga jual online shop</a>.
       </p>
     </details>
     <details>
@@ -215,6 +276,8 @@ const related = readyPages().filter((p) => p.nav && p.path !== path);
         halaman ditutup.
       </p>
     </details>
+
+    <RelatedGuides path={path} />
 
     {
       related.length > 0 && (

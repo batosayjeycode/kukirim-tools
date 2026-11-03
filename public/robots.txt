@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+# Cloudflare edge endpoints (e.g. /cdn-cgi/l/email-protection) are not site content.
+Disallow: /cdn-cgi/
 
 Sitemap: https://tools.kukirim.com/sitemap-index.xml

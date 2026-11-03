@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { CONTACT, PAGES, getContactFields, missingLaunchValues, readyPages } from '../src/config.js';
+import { CONTACT, PAGES, SITE, getContactFields, missingLaunchValues, readyPages } from '../src/config.js';
 
 describe('getContactFields', () => {
   it('hides every field while contact details are unset', () => {
@@ -42,5 +42,24 @@ describe('readyPages', () => {
 
   it('uses trailing-slash paths for every page', () => {
     for (const p of PAGES) expect(p.path).toMatch(/^\/.*\/$/);
+  });
+});
+
+describe('PAGES metadata', () => {
+  it('gives every page and the homepage a valid sitemap lastmod date', () => {
+    for (const date of [SITE.homeUpdated, ...PAGES.map((p) => p.updated)]) {
+      expect(date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      expect(new Date(`${date}T00:00:00Z`).toISOString().slice(0, 10)).toBe(date);
+    }
+  });
+
+  it('links tool and template pages to companion guides on kukirim.com', () => {
+    for (const p of PAGES.filter((page) => page.nav)) {
+      expect(p.guides?.length).toBeGreaterThan(0);
+      for (const g of p.guides ?? []) {
+        expect(g.url).toMatch(/^https:\/\/kukirim\.com\/panduan\/[a-z0-9-]+\/$/);
+        expect(g.title.trim()).not.toBe('');
+      }
+    }
   });
 });

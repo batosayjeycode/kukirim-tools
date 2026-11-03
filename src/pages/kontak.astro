@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 import { SITE, CONTACT, getContactFields } from '../config.js';
 
 const fields = getContactFields();
@@ -7,9 +8,11 @@ const operator = CONTACT.businessName?.trim();
 ---
 
 <BaseLayout
-  title="Kontak"
+  title="Kontak, Masukan & Laporan Masalah"
   description="Hubungi Kukirim Tools untuk masukan, pertanyaan, atau laporan masalah pada tools dan template."
 >
+  <Breadcrumb current="Kontak" />
+
   <article class="content content-page">
     <h1>Kontak</h1>
     <p class="lead">

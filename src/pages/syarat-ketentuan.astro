@@ -2,6 +2,7 @@
 // INTERNAL: plain-language text, not legal advice. Reviewed by the owner 2026-10-26 (LEGAL_REVIEW in
 // src/config.js). Set the flag back to false and re-review whenever data handling changes. Do not render review notes.
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 import { SITE } from '../config.js';
 
 const updated = '26 Oktober 2026';
@@ -11,6 +12,8 @@ const updated = '26 Oktober 2026';
   title="Syarat dan Ketentuan"
   description="Syarat penggunaan tools dan template Kukirim Tools: hasil berupa estimasi, bukan nasihat keuangan, pajak, atau hukum."
 >
+  <Breadcrumb current="Syarat dan Ketentuan" />
+
   <article class="content content-page">
     <h1>Syarat dan Ketentuan</h1>
     <p class="note">Terakhir diperbarui: {updated}</p>

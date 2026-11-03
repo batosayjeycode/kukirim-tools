@@ -26,8 +26,10 @@ export const MAX_QTY = 100000;
  * @property {number | string | null} [packaging] Packaging cost per order.
  * @property {number | string | null} [other]     Other costs per order.
  * @property {number | string | null} [qty]       Units per order (integer ≥ 1, default 1).
+ * @property {number | string | null} [targetMarginPct] Optional target net margin (% of revenue, 0 to < 100).
  *
  * @typedef {{ ok: true, price: number } | { ok: false, reason: 'no-finite-break-even' }} BreakEven
+ * @typedef {{ ok: true, price: number, marginPct: number } | { ok: false, reason: 'no-finite-target-price', marginPct: number }} TargetPrice
  *
  * @typedef {Object} ProfitResult
  * @property {number} price
@@ -48,6 +50,7 @@ export const MAX_QTY = 100000;
  * @property {number} totalRevenue
  * @property {number} totalProfit
  * @property {BreakEven} breakEven     Listed price at which profit = 0.
+ * @property {TargetPrice | null} targetPrice Listed price that reaches targetMarginPct; null when no target is set.
  *
  * @typedef {{ field: string, message: string }} FieldError
  */
@@ -105,35 +108,55 @@ function readField(errors, field, raw, { fallback = 0, max = MAX_AMOUNT, integer
 }
 
 /**
+ * Listed price at which net margin (profit ÷ revenue) equals `marginPct`, with the
+ * same discount and costs (PLAN.md §0.2). With marginPct = 0 this is the break-even
+ * table; m = marginPct/100 extends each cell:
+ *
+ * | Seller discount | feeBase = revenue           | feeBase = listed              |
+ * | none            | C / (1 − f − m)             | C / (1 − f − m)               |
+ * | fixed a         | C / (1 − f − m) + a         | (C + a(1 − m)) / (1 − f − m)  |
+ * | percent p       | C / ((1 − f − m)(1 − p))    | C / ((1 − p)(1 − m) − f)      |
+ *
+ * @param {{ cost: number, feeFixed: number, orderCosts: number, feePct: number, feeBase: FeeBase,
+ *           sellerDiscount: { type: DiscountType, value: number } | null, marginPct?: number }} p
+ * @returns {{ ok: true, price: number } | { ok: false }}
+ */
+export function priceForMargin({ cost, feeFixed, orderCosts, feePct, feeBase, sellerDiscount, marginPct = 0 }) {
+  const C = cost + feeFixed + orderCosts;
+  const f = feePct / 100;
+  const m = marginPct / 100;
+
+  let numerator = C;
+  let denominator = 1 - f - m;
+  let offset = 0;
+
+  if (sellerDiscount && sellerDiscount.value > 0) {
+    if (sellerDiscount.type === 'percent') {
+      const p = sellerDiscount.value / 100;
+      denominator = feeBase === 'listed' ? (1 - p) * (1 - m) - f : (1 - f - m) * (1 - p);
+    } else if (feeBase === 'listed') {
+      numerator = C + sellerDiscount.value * (1 - m);
+    } else {
+      offset = sellerDiscount.value;
+    }
+  }
+
+  if (!(denominator > 0)) return { ok: false };
+  const price = numerator / denominator + offset;
+  if (!Number.isFinite(price) || price < 0) return { ok: false };
+  return { ok: true, price };
+}
+
+/**
  * Listed price at which per-unit profit is zero (PLAN.md §0.2 table).
  *
  * @param {{ cost: number, feeFixed: number, orderCosts: number, feePct: number, feeBase: FeeBase,
  *           sellerDiscount: { type: DiscountType, value: number } | null }} p
  * @returns {BreakEven}
  */
-export function breakEvenPrice({ cost, feeFixed, orderCosts, feePct, feeBase, sellerDiscount }) {
-  const C = cost + feeFixed + orderCosts;
-  const f = feePct / 100;
-
-  let numerator = C;
-  let denominator = 1 - f;
-  let offset = 0;
-
-  if (sellerDiscount && sellerDiscount.value > 0) {
-    if (sellerDiscount.type === 'percent') {
-      const p = sellerDiscount.value / 100;
-      denominator = feeBase === 'listed' ? 1 - p - f : (1 - f) * (1 - p);
-    } else if (feeBase === 'listed') {
-      numerator = C + sellerDiscount.value;
-    } else {
-      offset = sellerDiscount.value;
-    }
-  }
-
-  if (!(denominator > 0)) return { ok: false, reason: 'no-finite-break-even' };
-  const price = numerator / denominator + offset;
-  if (!Number.isFinite(price) || price < 0) return { ok: false, reason: 'no-finite-break-even' };
-  return { ok: true, price };
+export function breakEvenPrice(p) {
+  const r = priceForMargin({ ...p, marginPct: 0 });
+  return r.ok ? { ok: true, price: r.price } : { ok: false, reason: 'no-finite-break-even' };
 }
 
 /**
@@ -154,6 +177,12 @@ export function calculateProfit(input = {}) {
   const packaging = readField(errors, 'packaging', input.packaging);
   const other = readField(errors, 'other', input.other);
   const qty = readField(errors, 'qty', input.qty, { fallback: 1, max: MAX_QTY, integer: true, min: 1 });
+  const targetRaw = input.targetMarginPct;
+  const hasTarget = !(targetRaw === null || targetRaw === undefined || (typeof targetRaw === 'string' && targetRaw.trim() === ''));
+  const targetMarginPct = hasTarget ? readField(errors, 'targetMarginPct', targetRaw, { max: 100 }) : null;
+  if (targetMarginPct !== null && targetMarginPct >= 100) {
+    errors.push({ field: 'targetMarginPct', message: 'Target margin harus di bawah 100%.' });
+  }
 
   const feeBase = input.feeBase ?? 'revenue';
   if (feeBase !== 'revenue' && feeBase !== 'listed') {
@@ -190,6 +219,23 @@ export function calculateProfit(input = {}) {
   const profit = revenue - cost - fee - orderCosts;
   const margin = revenue > 0 ? (profit / revenue) * 100 : null;
 
+  const marginInputs = {
+    cost,
+    feeFixed,
+    orderCosts,
+    feePct,
+    feeBase,
+    sellerDiscount: discountFunder === 'seller' ? { type: discountType, value: discountValue } : null,
+  };
+  /** @type {TargetPrice | null} */
+  let targetPrice = null;
+  if (targetMarginPct !== null) {
+    const r = priceForMargin({ ...marginInputs, marginPct: targetMarginPct });
+    targetPrice = r.ok
+      ? { ok: true, price: r.price, marginPct: targetMarginPct }
+      : { ok: false, reason: 'no-finite-target-price', marginPct: targetMarginPct };
+  }
+
   /** @type {ProfitResult} */
   const result = {
     price,
@@ -209,14 +255,8 @@ export function calculateProfit(input = {}) {
     qty,
     totalRevenue: revenue * qty,
     totalProfit: profit * qty,
-    breakEven: breakEvenPrice({
-      cost,
-      feeFixed,
-      orderCosts,
-      feePct,
-      feeBase,
-      sellerDiscount: discountFunder === 'seller' ? { type: discountType, value: discountValue } : null,
-    }),
+    breakEven: breakEvenPrice(marginInputs),
+    targetPrice,
   };
 
   return { ok: true, result };

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE, PAGES } from '../config.js';
+import { ORGANIZATION, webSite } from '../lib/schema.js';
 
 const featured = PAGES.filter((p) => p.nav);
 const tools = featured.filter((p) => p.kind === 'tool');
@@ -11,9 +12,11 @@ const sections = [
   { id: 'tools', heading: 'Tools gratis', items: tools },
   { id: 'templates', heading: 'Template spreadsheet gratis', items: templates },
 ].filter((s) => s.items.length > 0);
+
+const jsonLd = [ORGANIZATION, webSite({ name: SITE.name, description: SITE.description })];
 ---
 
-<BaseLayout title="Beranda" description={SITE.description}>
+<BaseLayout title="Beranda" description={SITE.description} jsonLd={jsonLd}>
   <section class="hero">
     <h1>{SITE.tagline}</h1>
     <p class="lead">
@@ -56,6 +59,10 @@ const sections = [
     <p>
       {SITE.name} tidak berafiliasi dengan marketplace atau jasa pengiriman mana pun.{' '}
       <a href="/tentang/">Tentang kami</a>.
+    </p>
+    <p>
+      Ingin memahami dasarnya dulu, seperti cara menentukan harga jual atau membuat pembukuan? Baca{' '}
+      <a href={new URL('/panduan/', SITE.mainSiteUrl).href}>panduan seller online di kukirim.com</a>.
     </p>
   </section>
 </BaseLayout>

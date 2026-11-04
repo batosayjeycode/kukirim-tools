@@ -101,6 +101,12 @@ for (const file of htmlFiles(DIST)) {
     const ogImage = one(html, /<meta property="og:image" content="([^"]*)"/);
     if (ogImage && (!ogImage.startsWith(`${SITE}/`) || !resolves(ogImage.slice(SITE.length)))) err(`og:image not found: ${ogImage}`);
     if (one(html, /<meta property="og:url" content="([^"]*)"/) !== canonical) err('og:url ≠ canonical');
+    // X/Twitter cards: explicit tags that match Open Graph (social previews must agree with the page).
+    for (const [tw, og] of [['twitter:title', 'og:title'], ['twitter:description', 'og:description'], ['twitter:image', 'og:image']]) {
+      const value = one(html, new RegExp(`<meta name="${tw}" content="([^"]*)"`));
+      if (!value) err(`missing ${tw}`);
+      else if (value !== one(html, new RegExp(`<meta property="${og}" content="([^"]*)"`))) err(`${tw} ≠ ${og}`);
+    }
   }
 
   const jsonLdBlocks = all(html, /<script type="application\/ld\+json">([\s\S]*?)<\/script>/g);

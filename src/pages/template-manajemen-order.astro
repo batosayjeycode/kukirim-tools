@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import RelatedGuides from '../components/RelatedGuides.astro';
+import Share from '../components/Share.astro';
 import { readyPages } from '../config.js';
 import { getDownload } from '../lib/downloads.js';
 
@@ -134,6 +135,15 @@ const columns = [
     </details>
 
     <RelatedGuides path={path} />
+
+    <Share
+      path={path}
+      title="Template Manajemen Order"
+      text="Template manajemen order gratis dari Kukirim untuk merekap pesanan dari semua channel dan memantau pengiriman:"
+      heading="Bagikan template ini"
+      pageType="template"
+      toolName="template-manajemen-order"
+    />
 
     {
       related.length > 0 && (

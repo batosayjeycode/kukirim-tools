@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import RelatedGuides from '../components/RelatedGuides.astro';
 import Field from '../components/Field.astro';
+import Share from '../components/Share.astro';
 import { readyPages } from '../config.js';
 import { webApplication } from '../lib/schema.js';
 
@@ -24,6 +25,8 @@ const jsonLd = [
     ],
   }),
 ];
+const shareText =
+  'Saya pakai Kalkulator Keuntungan Kukirim untuk menghitung laba bersih, margin, dan harga impas setelah biaya marketplace. Gratis, coba hitung sendiri:';
 const related = readyPages().filter((p) => p.nav && p.path !== path);
 ---
 
@@ -137,14 +140,28 @@ const related = readyPages().filter((p) => p.nav && p.path !== path);
           </div>
         </dl>
 
-        <div class="share">
-          <button type="button" id="profit-share" class="button-secondary">Salin tautan perhitungan</button>
-          <p id="profit-share-status" class="field-hint" role="status" aria-live="polite"></p>
+        <Share
+          id="profit-share-box"
+          path={path}
+          title="Kalkulator Keuntungan Jualan Online"
+          text={shareText}
+          heading="Bagikan hasil"
+          headingLevel="h3"
+          pageType="tool"
+          toolName="kalkulator-keuntungan"
+          contentType="result"
+          copyId="profit-share"
+          statusId="profit-share-status"
+        >
+          <label class="choice">
+            <input type="checkbox" id="profit-share-inputs" checked /> Sertakan semua angka isian di tautan agar penerima bisa
+            membuka perhitungan yang sama
+          </label>
           <p class="field-hint">
-            Angka disimpan di tautan (setelah tanda #) dan tidak dikirim ke server kami. Siapa pun yang menerima tautan bisa
-            melihat angkanya.
+            Pesan berisi ringkasan hasil (laba, margin, harga impas). Jika dicentang, angka isian disimpan di tautan (setelah
+            tanda #) dan tidak dikirim ke server kami, tetapi siapa pun yang menerima tautan bisa melihatnya.
           </p>
-        </div>
+        </Share>
 
         <table class="breakdown">
           <caption>Rincian per unit</caption>
@@ -278,6 +295,8 @@ const related = readyPages().filter((p) => p.nav && p.path !== path);
     </details>
 
     <RelatedGuides path={path} />
+
+    <Share path={path} title="Kalkulator Keuntungan Jualan Online" text={shareText} heading="Bagikan kalkulator ini" pageType="tool" toolName="kalkulator-keuntungan" />
 
     {
       related.length > 0 && (

@@ -1,0 +1,85 @@
+---
+/**
+ * Share block: native share (when the browser supports it), WhatsApp, Telegram, Facebook, X
+ * and copy link. Platform links are built at build time, so they work without JavaScript;
+ * the native and copy buttons appear once src/scripts/share.js runs. Always shares the
+ * canonical https URL of `path` (never a preview or pages.dev host).
+ */
+import { SITE } from '../config.js';
+import { SHARE_PLATFORMS, buildShareLinks } from '../lib/share.js';
+
+interface Props {
+  /** Canonical path of the shared page, e.g. "/kalkulator-keuntungan/". */
+  path: string;
+  title: string;
+  /** Message shown before the link. Keep it short and natural. */
+  text: string;
+  heading?: string;
+  headingLevel?: 'h2' | 'h3';
+  /** Analytics context (no user input). */
+  pageType: 'tool' | 'template' | 'page';
+  toolName?: string;
+  contentType?: 'page' | 'result';
+  id?: string;
+  /** Ids for the copy button and status line, for page scripts and tests. */
+  copyId?: string;
+  statusId?: string;
+}
+
+const {
+  path,
+  title,
+  text,
+  heading = 'Bagikan',
+  headingLevel: Heading = 'h2',
+  pageType,
+  toolName = '',
+  contentType = 'page',
+  id = 'share',
+  copyId,
+  statusId,
+} = Astro.props;
+const url = new URL(path, SITE.url).href;
+const links = buildShareLinks({ text, url });
+if (!links) throw new Error(`Share: invalid URL ${url}`);
+---
+
+<div
+  class="share"
+  id={id}
+  role="group"
+  aria-labelledby={`${id}-heading`}
+  data-share
+  data-title={title}
+  data-text={text}
+  data-url={url}
+  data-page-type={pageType}
+  data-tool-name={toolName}
+  data-content-type={contentType}
+>
+  <Heading id={`${id}-heading`} class="share-heading">{heading}</Heading>
+  <slot />
+  <div class="share-actions">
+    <button type="button" class="button-secondary" data-share-native hidden>Bagikan…</button>
+    {
+      SHARE_PLATFORMS.map((p) => (
+        <a
+          class="button-secondary"
+          href={links[p.id]}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-share-to={p.id}
+          aria-label={`Bagikan ke ${p.label} (membuka tab baru)`}
+        >
+          {p.label}
+        </a>
+      ))
+    }
+    <button type="button" class="button-secondary" id={copyId} data-share-copy hidden>Salin tautan</button>
+  </div>
+  <p class="field-hint" id={statusId} role="status" aria-live="polite" data-share-status></p>
+</div>
+
+<script>
+  import '../scripts/share.js';
+</script>

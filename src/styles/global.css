@@ -609,6 +609,24 @@ button:disabled:hover {
   display: none;
 }
 
+.share .share-heading {
+  margin: 0 0 0.5rem;
+  font-size: 1.0625rem;
+}
+
+.share-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.share-actions .button-secondary {
+  min-height: 2.5rem;
+  padding: 0.375rem 0.875rem;
+  font-size: 0.9375rem;
+}
+
 /* ---------- Tool layout ---------- */
 
 .tool {

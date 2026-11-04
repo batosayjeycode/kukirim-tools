@@ -4,7 +4,8 @@
  */
 import { calculateProfit, parseNumber } from '../lib/profit.js';
 import { formatIDR, formatPercent, formatBreakEven, formatTargetPrice } from '../lib/format.js';
-import { SHARE_FIELDS, decodeShareState, encodeShareState } from '../lib/share.js';
+import { SHARE_FIELDS, decodeShareState, encodeShareState, profitShareText } from '../lib/share.js';
+import { setShareData } from './share.js';
 
 /** Worked example shown on the page (fictitious numbers). */
 const EXAMPLE = {
@@ -42,6 +43,25 @@ function init(form) {
   const row = (name) => /** @type {HTMLElement} */ (results.querySelector(`[data-row="${name}"]`));
   /** @param {string} name */
   const value = (name) => String(new FormData(form).get(name) ?? '');
+
+  // "Bagikan hasil" block. Its canonical URL comes from the build, never from location.
+  const shareBox = /** @type {HTMLElement | null} */ (document.getElementById('profit-share-box'));
+  const shareInputs = /** @type {HTMLInputElement | null} */ (document.getElementById('profit-share-inputs'));
+  const shareBase = shareBox?.dataset.url ?? '';
+  /** @type {import('../lib/profit.js').ProfitResult | null} */
+  let lastResult = null;
+
+  /** Fragment with the current form values, or "" when the user chose not to include them. */
+  const shareHash = () =>
+    shareInputs?.checked === false
+      ? ''
+      : encodeShareState(Object.fromEntries(Object.keys(SHARE_FIELDS).map((name) => [name, value(name)])));
+
+  function updateShare() {
+    if (!shareBox || !lastResult) return;
+    const hash = shareHash();
+    setShareData(shareBox, { text: profitShareText(lastResult), url: hash ? `${shareBase}#${hash}` : shareBase, keepHash: true });
+  }
 
   /** Map a lib field name (e.g. "discount.value") to its input id ("discountValue"). */
   const inputId = (/** @type {string} */ field) => field.replace(/\.(\w)/, (_, c) => c.toUpperCase());
@@ -88,6 +108,7 @@ function init(form) {
       targetMarginPct: value('targetMarginPct'),
     });
 
+    lastResult = null;
     if (!outcome.ok) {
       showErrors(outcome.errors);
       results.hidden = true;
@@ -101,6 +122,8 @@ function init(form) {
     }
 
     const r = outcome.result;
+    lastResult = r;
+    updateShare();
     status.textContent = '';
     results.hidden = false;
 
@@ -159,20 +182,15 @@ function init(form) {
     form.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 
-  // Shareable link: values live in the URL fragment, which is never sent to the server.
-  const shareButton = document.getElementById('profit-share');
+  // Copying the result link also puts it in the address bar (fragment only; never sent to the server).
   const shareStatus = /** @type {HTMLElement | null} */ (document.getElementById('profit-share-status'));
-  shareButton?.addEventListener('click', async () => {
-    const values = Object.fromEntries(Object.keys(SHARE_FIELDS).map((name) => [name, value(name)]));
-    const url = `${location.origin}${location.pathname}#${encodeShareState(values)}`;
-    history.replaceState(null, '', url);
-    if (!shareStatus) return;
-    try {
-      await navigator.clipboard.writeText(url);
-      shareStatus.textContent = 'Tautan disalin. Tempel di chat untuk membagikan perhitungan ini.';
-    } catch {
-      shareStatus.textContent = 'Tautan sudah ada di bilah alamat browser. Salin dari sana untuk membagikannya.';
-    }
+  document.getElementById('profit-share')?.addEventListener('click', () => {
+    const hash = shareHash();
+    if (hash) history.replaceState(null, '', `${location.pathname}#${hash}`);
+  });
+  shareInputs?.addEventListener('change', () => {
+    updateShare();
+    if (shareStatus) shareStatus.textContent = '';
   });
 
   // Once the user edits a shared calculation, drop the now-stale link from the address bar.

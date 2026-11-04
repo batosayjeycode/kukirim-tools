@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import RelatedGuides from '../components/RelatedGuides.astro';
+import Share from '../components/Share.astro';
 import { readyPages } from '../config.js';
 import { getDownload } from '../lib/downloads.js';
 
@@ -135,6 +136,15 @@ const related = readyPages().filter((p) => p.nav && p.path !== path);
     </details>
 
     <RelatedGuides path={path} />
+
+    <Share
+      path={path}
+      title="Template Pembukuan Online Shop"
+      text="Template pembukuan online shop gratis dari Kukirim untuk mencatat pemasukan, pengeluaran, dan laba bulanan:"
+      heading="Bagikan template ini"
+      pageType="template"
+      toolName="template-pembukuan-online-shop"
+    />
 
     {
       related.length > 0 && (

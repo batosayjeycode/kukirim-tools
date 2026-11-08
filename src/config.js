@@ -66,6 +66,10 @@ const GUIDES = {
     title: 'Cara Menghitung BEP (Titik Impas) Online Shop',
     url: 'https://kukirim.com/panduan/cara-menghitung-bep-online-shop/',
   },
+  roas: {
+    title: 'Cara Menghitung ROAS Impas agar Iklan Tidak Rugi',
+    url: 'https://kukirim.com/panduan/cara-menghitung-roas-impas-iklan/',
+  },
 };
 
 /**
@@ -83,11 +87,11 @@ export const PAGES = [
     path: '/kalkulator-keuntungan/',
     label: 'Kalkulator Keuntungan',
     ready: true,
-    updated: '2026-11-03',
+    updated: '2026-11-08',
     nav: true,
     kind: 'tool',
     summary: 'Hitung laba bersih, margin, harga impas, dan harga jual untuk target margin setelah diskon dan biaya marketplace.',
-    guides: [GUIDES.hargaJual, GUIDES.pembukuan],
+    guides: [GUIDES.hargaJual, GUIDES.roas, GUIDES.pembukuan],
   },
   {
     path: '/kalkulator-bep/',

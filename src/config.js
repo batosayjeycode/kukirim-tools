@@ -62,6 +62,10 @@ const GUIDES = {
     title: 'Cara Mengelola Pesanan Online Shop dari Banyak Channel',
     url: 'https://kukirim.com/panduan/cara-mengelola-pesanan-online-shop/',
   },
+  bep: {
+    title: 'Cara Menghitung BEP (Titik Impas) Online Shop',
+    url: 'https://kukirim.com/panduan/cara-menghitung-bep-online-shop/',
+  },
 };
 
 /**
@@ -93,7 +97,7 @@ export const PAGES = [
     nav: true,
     kind: 'tool',
     summary: 'Hitung berapa unit dan berapa rupiah penjualan per bulan yang dibutuhkan untuk menutup biaya tetap toko.',
-    guides: [GUIDES.hargaJual, GUIDES.pembukuan],
+    guides: [GUIDES.bep, GUIDES.hargaJual, GUIDES.pembukuan],
   },
   {
     path: '/generator-label-paket/',

@@ -1,0 +1,247 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import RelatedGuides from '../components/RelatedGuides.astro';
+import Field from '../components/Field.astro';
+import Share from '../components/Share.astro';
+import { readyPages } from '../config.js';
+import { webApplication } from '../lib/schema.js';
+
+const path = '/kalkulator-bep/';
+const title = 'Kalkulator BEP (Titik Impas) Online Shop';
+const description =
+  'Hitung BEP online shop: berapa unit dan berapa rupiah penjualan per bulan untuk menutup biaya tetap, plus target penjualan untuk laba bulanan. Gratis.';
+const jsonLd = [
+  webApplication({
+    name: title,
+    path,
+    description,
+    featureList: [
+      'Laba per unit setelah HPP dan biaya marketplace',
+      'BEP dalam unit per bulan dan per hari',
+      'BEP dalam rupiah penjualan',
+      'Target penjualan untuk laba bulanan',
+    ],
+  }),
+];
+const shareText =
+  'Saya pakai Kalkulator BEP Kukirim untuk menghitung berapa produk yang harus terjual tiap bulan agar balik modal. Gratis, coba hitung sendiri:';
+const related = readyPages().filter((p) => p.nav && p.path !== path);
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  jsonLd={jsonLd}
+  image={{ src: '/images/og-kalkulator-bep.png', alt: 'Kalkulator BEP online shop: unit dan penjualan per bulan untuk balik modal' }}
+>
+  <Breadcrumb current="Kalkulator BEP" />
+
+  <h1>{title}</h1>
+  <p class="lead">
+    Untung per produk belum tentu membuat toko untung. Masukkan harga, biaya per unit, dan biaya tetap bulanan untuk
+    melihat berapa produk yang harus terjual setiap bulan agar tidak rugi, dan berapa untuk mencapai target laba Anda.
+  </p>
+
+  <div class="tool">
+    <form id="bep-form" class="tool-form" novalidate>
+      <fieldset>
+        <legend>Harga dan biaya per unit</legend>
+        <Field id="price" label="Harga jual" hint="Harga yang benar-benar dibayar pembeli, setelah diskon penjual." prefix="Rp" placeholder="75.000" />
+        <Field id="cost" label="Modal produk (HPP)" prefix="Rp" placeholder="40.000" />
+        <Field id="feePct" label="Biaya marketplace (persentase)" hint="Dihitung dari harga jual. Cek tarif di pusat penjual Anda." suffix="%" placeholder="0" />
+        <Field id="feeFixed" label="Biaya marketplace tetap per unit" prefix="Rp" placeholder="0" />
+        <Field id="unitOther" label="Kemasan, subsidi ongkir, dan biaya lain per unit" prefix="Rp" placeholder="0" />
+      </fieldset>
+
+      <fieldset>
+        <legend>Biaya tetap per bulan</legend>
+        <p class="field-hint">Biaya yang tetap keluar walaupun bulan ini tidak ada pesanan.</p>
+        <Field id="salaries" label="Gaji" hint="Termasuk gaji yang wajar untuk Anda sendiri jika mengurus toko." prefix="Rp" placeholder="0" />
+        <Field id="ads" label="Iklan dengan anggaran tetap" prefix="Rp" placeholder="0" />
+        <Field id="overhead" label="Sewa, internet, aplikasi, dan lainnya" prefix="Rp" placeholder="0" />
+      </fieldset>
+
+      <fieldset>
+        <legend>Target dan hari jualan</legend>
+        <Field id="targetProfit" label="Target laba bersih per bulan (opsional)" prefix="Rp" placeholder="2.000.000" />
+        <Field id="days" label="Hari jualan per bulan" hint="Untuk menghitung target per hari." inputmode="numeric" value="30" />
+      </fieldset>
+
+      <div class="actions">
+        <button type="submit" class="button-primary">Hitung</button>
+        <button type="reset" class="button-secondary">Reset</button>
+        <button type="button" id="bep-example" class="button-link">Isi dengan contoh</button>
+      </div>
+    </form>
+
+    <section class="tool-results" aria-labelledby="results-heading">
+      <h2 id="results-heading">Hasil estimasi</h2>
+      <noscript><p>Kalkulator ini membutuhkan JavaScript yang aktif di browser Anda.</p></noscript>
+      <p id="bep-status" class="status" role="status" aria-live="polite"></p>
+
+      <div id="bep-results" tabindex="-1" hidden>
+        <dl class="summary">
+          <div>
+            <dt>BEP per bulan</dt>
+            <dd class="summary-main" data-out="bepUnits"></dd>
+          </div>
+          <div>
+            <dt>Penjualan minimal per bulan</dt>
+            <dd data-out="bepRevenue"></dd>
+          </div>
+          <div>
+            <dt>Rata-rata per hari</dt>
+            <dd data-out="bepPerDay"></dd>
+          </div>
+          <div>
+            <dt>Laba per unit</dt>
+            <dd data-out="contribution"></dd>
+          </div>
+          <div data-row="target" hidden>
+            <dt>Untuk laba <span data-out="targetProfit"></span> per bulan</dt>
+            <dd data-out="targetSales"></dd>
+          </div>
+        </dl>
+
+        <p class="note" data-row="noBreakEven" hidden>
+          Harga jual belum menutup biaya per unit, jadi toko tidak akan balik modal berapa pun jumlah yang terjual. Naikkan
+          harga atau kurangi biaya per unit.
+        </p>
+
+        <table class="breakdown">
+          <caption>Rincian</caption>
+          <tbody>
+            <tr><th scope="row">Harga jual</th><td data-out="price"></td></tr>
+            <tr><th scope="row">Biaya per unit<span class="note">HPP, biaya marketplace, kemasan, dan lainnya</span></th><td data-out="variableCost"></td></tr>
+            <tr class="subtotal"><th scope="row">Laba per unit<span class="note" data-out="contributionPct"></span></th><td data-out="contributionRow"></td></tr>
+            <tr><th scope="row">Biaya tetap per bulan</th><td data-out="fixedCosts"></td></tr>
+            <tr class="total"><th scope="row">BEP<span class="note" data-out="bepNote"></span></th><td data-out="bepUnitsRow"></td></tr>
+          </tbody>
+        </table>
+        <p class="note">
+          Jumlah unit dibulatkan ke atas. Semua hasil adalah estimasi berdasarkan angka yang Anda masukkan.
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <article class="content">
+    <h2>Cara kalkulator ini menghitung</h2>
+    <ol>
+      <li><strong>Biaya marketplace per unit</strong> = persentase × harga jual + biaya tetap per unit.</li>
+      <li>
+        <strong>Laba per unit</strong> = harga jual − HPP − biaya marketplace − kemasan, subsidi ongkir, dan biaya lain per
+        unit. Angka ini disebut juga margin kontribusi.
+      </li>
+      <li><strong>Biaya tetap</strong> = gaji + iklan dengan anggaran tetap + sewa, internet, aplikasi, dan lainnya.</li>
+      <li><strong>BEP (unit)</strong> = biaya tetap ÷ laba per unit, dibulatkan ke atas.</li>
+      <li><strong>BEP (rupiah)</strong> = BEP (unit) × harga jual.</li>
+      <li><strong>Target penjualan</strong> = (biaya tetap + target laba) ÷ laba per unit, dibulatkan ke atas.</li>
+      <li><strong>Per hari</strong> = jumlah unit ÷ hari jualan per bulan, dibulatkan ke atas.</li>
+    </ol>
+    <p>
+      Jika laba per unit nol atau negatif, tidak ada BEP: setiap penjualan justru menambah rugi atau tidak menutup biaya
+      tetap sama sekali.
+    </p>
+
+    <h2>Contoh perhitungan</h2>
+    <p>
+      Sebuah toko menjual produk seharga Rp 75.000 dengan modal Rp 40.000. Biaya marketplace 8% ditambah Rp 1.000 per unit,
+      dan kemasan serta subsidi ongkir Rp 3.000 per unit. Biaya tetapnya gaji admin Rp 1.500.000, iklan Rp 1.000.000, serta
+      internet dan aplikasi Rp 500.000 per bulan.
+    </p>
+    <table class="breakdown">
+      <caption>Contoh (data fiktif)</caption>
+      <tbody>
+        <tr><th scope="row">Harga jual</th><td>Rp 75.000</td></tr>
+        <tr><th scope="row">HPP</th><td>−Rp 40.000</td></tr>
+        <tr><th scope="row">Biaya marketplace 8% × Rp 75.000 + Rp 1.000</th><td>−Rp 7.000</td></tr>
+        <tr><th scope="row">Kemasan dan subsidi ongkir</th><td>−Rp 3.000</td></tr>
+        <tr class="subtotal"><th scope="row">Laba per unit</th><td>Rp 25.000</td></tr>
+        <tr><th scope="row">Biaya tetap per bulan</th><td>Rp 3.000.000</td></tr>
+        <tr class="total"><th scope="row">BEP: Rp 3.000.000 ÷ Rp 25.000</th><td>120 unit</td></tr>
+      </tbody>
+    </table>
+    <p>
+      Toko ini perlu menjual 120 unit per bulan, atau sekitar 4 unit per hari, dengan penjualan Rp 9.000.000 agar tidak
+      rugi. Untuk laba Rp 2.000.000 per bulan, targetnya 200 unit, atau sekitar 7 unit per hari.
+    </p>
+
+    <h2>Pertanyaan umum</h2>
+    <details>
+      <summary>Apa itu BEP?</summary>
+      <p>
+        BEP (<i>break-even point</i>) atau titik impas adalah jumlah penjualan saat toko tidak untung dan tidak rugi. Di bawah
+        BEP, laba dari produk yang terjual belum cukup untuk menutup biaya tetap bulanan. Setiap unit setelah BEP menambah
+        laba sebesar laba per unit. Penjelasan lengkap dengan contoh ada di panduan{' '}
+        <a href="https://kukirim.com/panduan/cara-menghitung-bep-online-shop/">cara menghitung BEP online shop</a>.
+      </p>
+    </details>
+    <details>
+      <summary>Apa bedanya dengan harga impas di Kalkulator Keuntungan?</summary>
+      <p>
+        Harga impas di <a href="/kalkulator-keuntungan/">Kalkulator Keuntungan</a> adalah harga jual minimal agar satu unit
+        tidak rugi, tanpa memperhitungkan biaya bulanan. Kalkulator BEP menjawab pertanyaan berikutnya: dengan laba per unit
+        itu, berapa unit yang harus terjual tiap bulan untuk menutup gaji, sewa, dan biaya tetap lainnya.
+      </p>
+    </details>
+    <details>
+      <summary>Biaya iklan masuk biaya tetap atau biaya per unit?</summary>
+      <p>
+        Jika Anda memasang anggaran iklan tetap per bulan, masukkan ke biaya tetap. Jika biaya iklan Anda dihitung per
+        pesanan, misalnya komisi affiliate atau iklan berbayar per penjualan, masukkan ke biaya lain per unit.
+      </p>
+    </details>
+    <details>
+      <summary>Bagaimana jika saya menjual banyak produk?</summary>
+      <p>
+        Pakai rata-rata: harga jual rata-rata per unit dan biaya per unit rata-rata dari penjualan bulan lalu. Hasilnya
+        berlaku selama komposisi produk yang terjual mirip. Jika lebih banyak produk bermargin tipis yang terjual, BEP yang
+        sebenarnya lebih tinggi.
+      </p>
+    </details>
+    <details>
+      <summary>Bagaimana dengan diskon?</summary>
+      <p>
+        Isi harga jual setelah diskon penjual. Diskon menurunkan laba per unit, sehingga BEP naik. Coba bandingkan hasilnya
+        dengan dan tanpa diskon sebelum ikut promo.
+      </p>
+    </details>
+    <details>
+      <summary>Apakah angka yang saya masukkan disimpan?</summary>
+      <p>
+        Tidak. Perhitungan dilakukan sepenuhnya di browser Anda. Angka tidak dikirim ke server dan tidak disimpan setelah
+        halaman ditutup.
+      </p>
+    </details>
+
+    <RelatedGuides path={path} />
+
+    <Share path={path} title={title} text={shareText} heading="Bagikan kalkulator ini" pageType="tool" toolName="kalkulator-bep" />
+
+    {
+      related.length > 0 && (
+        <>
+          <h2>Tools lainnya</h2>
+          <ul>
+            {related.map((p) => (
+              <li>
+                <a href={p.path}>{p.label}</a>
+              </li>
+            ))}
+          </ul>
+        </>
+      )
+    }
+
+    <p class="disclaimer">
+      Hasil kalkulator ini adalah estimasi untuk membantu perencanaan, bukan nasihat keuangan, pajak, atau hukum, dan bukan
+      kebijakan resmi marketplace mana pun.
+    </p>
+  </article>
+</BaseLayout>
+
+<script>
+  import '../scripts/bep-calculator.js';
+</script>

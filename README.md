@@ -1,6 +1,6 @@
 # kukirim-tools
 
-Source for **https://tools.kukirim.com** — free browser-based tools for Indonesian online sellers (profit calculator, parcel-label generator, spreadsheet templates).
+Source for **https://tools.kukirim.com** — free browser-based tools for Indonesian online sellers (profit calculator, break-even calculator, parcel-label generator, spreadsheet templates).
 
 The main SEO site `kukirim.com` lives in a separate repository, `kukirim-web`.
 
@@ -83,7 +83,7 @@ messages, events) is in `src/lib/share.js` and tested in `tests/share.test.js` a
 
 - Shared URLs are always the canonical `https://tools.kukirim.com/...` URL from `SITE.url` (never `location`, so
   previews and `*.pages.dev` are never shared). Query strings are stripped; `cleanShareUrl()` rejects non-https URLs.
-- Where it is used: all four tool/template pages (page share), plus **Bagikan hasil** in the profit calculator results.
+- Where it is used: all five tool/template pages (page share), plus **Bagikan hasil** in the profit calculator results.
   The result message is a summary (laba bersih, margin, harga impas, labelled "Estimasi"); the checkbox
   "Sertakan semua angka isian di tautan" adds the inputs as a `#fragment` (existing `encodeShareState`, validated
   fields only). Fragments are never sent to the server and are not separate URLs, so no indexable result URLs exist.

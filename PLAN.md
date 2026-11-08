@@ -143,6 +143,7 @@ Post-launch integration tasks (not part of the MVP steps above):
 | # | Task | Depends on | Completion criteria | Status |
 |---|---|---|---|---|
 | P1 | Link to `kukirim.com` from this site | 11 deployed and reachable | Set `SITE.mainSiteLive = true` in `src/config.js` (footer link renders automatically); add header/nav or in-content links only if useful; build passes | done 2026-10-31 |
+| P2 | BEP calculator `/kalkulator-bep/` (`src/lib/breakeven.js`): monthly break-even units/rupiah/per day and sales for a profit target; pairs with the kukirim.com BEP guide | 10 | `tests/breakeven.test.js` + `tests/dom/bep-calculator.test.js` pass; `npm run verify` 0 SEO errors; OG image in `scripts/build-og-images.sh` | done 2026-11-08 |
 
 Legal pages: `/privasi/` and `/syarat-ketentuan/` are plain-language texts (not legal advice), reviewed by the owner on 2026-10-26 (`LEGAL_REVIEW` both `true`). The privacy page names the operator (`CONTACT.businessName`, `CONTACT.email`), Cloudflare as host with possible processing outside Indonesia, and how to make data requests. Re-review and reset the flag whenever data handling changes. The public pages show no review notices; status is tracked internally by `LEGAL_REVIEW` in `src/config.js`, and `npm run check:launch` fails until both are `true`. Do not add the operator's legal identity or a governing-law clause unless the owner supplies verified details.
 

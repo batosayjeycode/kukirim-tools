@@ -17,7 +17,7 @@ export const SITE = {
     'Tools gratis untuk seller online Indonesia: kalkulator keuntungan, generator label paket, dan template spreadsheet. Tanpa daftar akun, diproses di browser Anda.',
   lang: 'id',
   /** Sitemap lastmod (YYYY-MM-DD) for the homepage; update when its content changes. */
-  homeUpdated: '2026-11-03',
+  homeUpdated: '2026-11-08',
 };
 
 /** @type {{ businessName: string | null, email: string | null, whatsapp: string | null, instagram: string | null }} */
@@ -62,6 +62,10 @@ const GUIDES = {
     title: 'Cara Mengelola Pesanan Online Shop dari Banyak Channel',
     url: 'https://kukirim.com/panduan/cara-mengelola-pesanan-online-shop/',
   },
+  bep: {
+    title: 'Cara Menghitung BEP (Titik Impas) Online Shop',
+    url: 'https://kukirim.com/panduan/cara-menghitung-bep-online-shop/',
+  },
 };
 
 /**
@@ -84,6 +88,16 @@ export const PAGES = [
     kind: 'tool',
     summary: 'Hitung laba bersih, margin, harga impas, dan harga jual untuk target margin setelah diskon dan biaya marketplace.',
     guides: [GUIDES.hargaJual, GUIDES.pembukuan],
+  },
+  {
+    path: '/kalkulator-bep/',
+    label: 'Kalkulator BEP',
+    ready: true,
+    updated: '2026-11-08',
+    nav: true,
+    kind: 'tool',
+    summary: 'Hitung berapa unit dan berapa rupiah penjualan per bulan yang dibutuhkan untuk menutup biaya tetap toko.',
+    guides: [GUIDES.bep, GUIDES.hargaJual, GUIDES.pembukuan],
   },
   {
     path: '/generator-label-paket/',

@@ -16,3 +16,4 @@ shot og-kalkulator-keuntungan.png 'h=Kalkulator keuntungan jualan online&c=Laba 
 shot og-generator-label-paket.png 'h=Generator %26 cetak label pengiriman paket&c=Thermal 100×150 mm|A4 isi 8|Impor CSV'
 shot og-template-pembukuan-online-shop.png 'h=Template pembukuan online shop (Excel)&c=Pemasukan|Pengeluaran|Laba per bulan'
 shot og-template-manajemen-order.png 'h=Template rekap orderan online shop&c=Semua channel|Status bayar|Status kirim'
+shot og-kalkulator-bep.png 'h=Kalkulator BEP (titik impas) online shop&c=Unit per bulan|Penjualan minimal|Target laba'

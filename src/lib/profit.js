@@ -91,7 +91,7 @@ export function parseNumber(value, fallback = 0) {
  * @param {unknown} raw
  * @param {{ fallback?: number, max?: number, integer?: boolean, min?: number }} [opts]
  */
-function readField(errors, field, raw, { fallback = 0, max = MAX_AMOUNT, integer = false, min = 0 } = {}) {
+export function readField(errors, field, raw, { fallback = 0, max = MAX_AMOUNT, integer = false, min = 0 } = {}) {
   const n = parseNumber(raw, fallback);
   if (!Number.isFinite(n)) {
     errors.push({ field, message: 'Masukkan angka yang valid.' });

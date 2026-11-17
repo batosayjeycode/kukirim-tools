@@ -14,7 +14,7 @@ export const SITE = {
   mainSiteLive: true,
   tagline: 'Tools Gratis untuk Seller Online Indonesia',
   description:
-    'Tools gratis untuk seller online Indonesia: kalkulator keuntungan, generator label paket, dan template spreadsheet. Tanpa daftar akun, diproses di browser Anda.',
+    'Tools gratis untuk seller online Indonesia: kalkulator keuntungan dan BEP, generator label paket, template spreadsheet. Tanpa akun, diproses di browser Anda.',
   lang: 'id',
   /** Sitemap lastmod (YYYY-MM-DD) for the homepage; update when its content changes. */
   homeUpdated: '2026-11-08',
@@ -70,6 +70,18 @@ const GUIDES = {
     title: 'Cara Menghitung ROAS Impas agar Iklan Tidak Rugi',
     url: 'https://kukirim.com/panduan/cara-menghitung-roas-impas-iklan/',
   },
+  keuntungan: {
+    title: 'Cara Menghitung Keuntungan Jualan Online',
+    url: 'https://kukirim.com/panduan/cara-menghitung-keuntungan-jualan-online/',
+  },
+  hpp: {
+    title: 'Cara Menghitung HPP Produk Online Shop',
+    url: 'https://kukirim.com/panduan/cara-menghitung-hpp-produk-online-shop/',
+  },
+  margin: {
+    title: 'Perbedaan Margin dan Markup dalam Jualan Online',
+    url: 'https://kukirim.com/panduan/perbedaan-margin-dan-markup/',
+  },
 };
 
 /**
@@ -87,21 +99,21 @@ export const PAGES = [
     path: '/kalkulator-keuntungan/',
     label: 'Kalkulator Keuntungan',
     ready: true,
-    updated: '2026-11-08',
+    updated: '2026-11-17',
     nav: true,
     kind: 'tool',
     summary: 'Hitung laba bersih, margin, harga impas, dan harga jual untuk target margin setelah diskon dan biaya marketplace.',
-    guides: [GUIDES.hargaJual, GUIDES.roas, GUIDES.pembukuan],
+    guides: [GUIDES.keuntungan, GUIDES.hpp, GUIDES.margin, GUIDES.hargaJual, GUIDES.roas],
   },
   {
     path: '/kalkulator-bep/',
     label: 'Kalkulator BEP',
     ready: true,
-    updated: '2026-11-08',
+    updated: '2026-11-17',
     nav: true,
     kind: 'tool',
     summary: 'Hitung berapa unit dan berapa rupiah penjualan per bulan yang dibutuhkan untuk menutup biaya tetap toko.',
-    guides: [GUIDES.bep, GUIDES.hargaJual, GUIDES.pembukuan],
+    guides: [GUIDES.bep, GUIDES.hpp, GUIDES.roas, GUIDES.hargaJual, GUIDES.pembukuan],
   },
   {
     path: '/generator-label-paket/',
@@ -127,7 +139,7 @@ export const PAGES = [
     path: '/template-manajemen-order/',
     label: 'Template Manajemen Order',
     ready: true,
-    updated: '2026-11-03',
+    updated: '2026-11-17',
     nav: true,
     kind: 'template',
     summary: 'Rekap pesanan dari semua channel dan pantau mana yang sudah dibayar dan perlu dikirim.',
